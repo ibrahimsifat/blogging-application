@@ -1,3 +1,8 @@
+const dotEnv = require("dotenv");
+// config
+dotEnv.config({
+  path: "../.env",
+});
 const config = {
   env: process.env.NODE_ENV || "development",
   port: process.env.PORT || 5000,

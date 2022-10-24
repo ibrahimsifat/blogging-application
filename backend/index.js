@@ -1,6 +1,6 @@
-const { port } = require("./config/config.js");
 const http = require("http");
 const app = require("./app/app");
+const { port } = require("./config/config");
 const connectDB = require("./services/connectDB");
 
 // console.log(port);
