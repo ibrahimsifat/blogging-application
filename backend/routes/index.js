@@ -9,6 +9,6 @@ indexRoute.get("/health", (req, res) => {
 
 // router use..............
 
-indexRoute.use("/api/v1", authRouter);
+indexRoute.use("/", authRouter);
 
 module.exports = indexRoute;

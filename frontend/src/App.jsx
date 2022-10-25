@@ -45,6 +45,9 @@ const App = () => {
   return (
     <>
       <Routers />
+      {/* <CustomResigter /> */}
+      {/* <RelatedArticles /> */}
+      {/* <ArticlesDetails /> */}
     </>
   );
 };

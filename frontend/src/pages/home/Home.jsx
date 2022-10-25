@@ -7,7 +7,7 @@ import RecentArticles from "../../components/home/recent-articles/RecentArticles
 import Categories from "../../components/home/recomendedCategory/Categories";
 import Tags from "../../components/home/tags/Tags";
 import Writers from "../../components/home/want-follow/Writers";
-import HomeArticles from "./articles/HomeArticles";
+import ArticlesDetails from "./articlesDetails/ArticlesDetails";
 import {
   HomeContainer,
   HomeGrid,
@@ -36,7 +36,8 @@ const Home = () => {
           </HomeProfileContainer>
         </HomeLeftContainer>
         {/* section 2 */}
-        <HomeArticles />
+        {/* <HomeArticles /> */}
+        <ArticlesDetails />
 
         {/* section 3 */}
         <HomeRightContainer>
