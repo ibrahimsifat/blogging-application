@@ -2,7 +2,7 @@
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
-const indexRoute = require("../routes/routes");
+const indexRoute = require("../routes");
 
 // internal imports
 

@@ -1,13 +1,15 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import ArticlesDetails from "../pages/home/articlesDetails/ArticlesDetails";
 import Home from "../pages/home/Home";
 const Routers = () => {
   return (
-    <BrowserRouter>
+    <Routers>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="artical/details/:slug" element={<ArticlesDetails />} />
       </Routes>
-    </BrowserRouter>
+    </Routers>
   );
 };
 

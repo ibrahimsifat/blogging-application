@@ -2,15 +2,13 @@ import React from "react";
 import { AiFillHome } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { IoIosNotifications } from "react-icons/io";
-import Articles from "../../components/home/articles/Articles";
-import Navbar from "../../components/home/navigation/Navbar";
 import OldestArticles from "../../components/home/oldestArticles/OldestArticles";
 import RecentArticles from "../../components/home/recent-articles/RecentArticles";
 import Categories from "../../components/home/recomendedCategory/Categories";
 import Tags from "../../components/home/tags/Tags";
 import Writers from "../../components/home/want-follow/Writers";
+import HomeArticles from "./articles/HomeArticles";
 import {
-  HomeCenterContainer,
   HomeContainer,
   HomeGrid,
   HomeLeftContainer,
@@ -38,10 +36,8 @@ const Home = () => {
           </HomeProfileContainer>
         </HomeLeftContainer>
         {/* section 2 */}
-        <HomeCenterContainer>
-          <Navbar />
-          <Articles />
-        </HomeCenterContainer>
+        <HomeArticles />
+
         {/* section 3 */}
         <HomeRightContainer>
           <Categories />
