@@ -1,5 +1,6 @@
+import { Badge } from "@windmill/react-ui";
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Articles = () => {
   return (
     <div>
@@ -31,26 +32,18 @@ const Article = () => {
         <div className="sm:col-span-2 p-4">
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
-              <span className="inline-flex items-center leading-none px-3 py-1.5 text-sm font-medium text-skin-inverted rounded-full border border-skin-input bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                Tag
-              </span>
-
-              <span className="inline-flex items-center leading-none px-2.5 py-1.5 text-sm font-medium text-skin-inverted rounded-full border border-skin-input  bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                Tag
-              </span>
-
-              <span className="inline-flex items-center leading-none px-2.5 py-1.5 text-sm font-medium text-skin-inverted rounded-full border border-skin-input  bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                Tag
-              </span>
+              <Badge type="neutral">JavaScript</Badge>
+              <Badge>React</Badge>
+              <Badge>Node Js</Badge>
             </div>
           </div>
 
           <div className="mt-2">
-            <a href="fg" className="group">
+            <Link to="/articles/articles-slug">
               <h4 className="text-lg leading-6 font-semibold font-sans text-skin-inverted group-hover:text-skin-primary">
                 A Tailwind CSS Card for Displaying....
               </h4>
-            </a>
+            </Link>
 
             <p className="mt-1 text-sm font-normal text-skin-base leading-5">
               Metus potenti velit sollicitudin porttitor magnis elit lacinia

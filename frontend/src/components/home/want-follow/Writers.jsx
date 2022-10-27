@@ -31,7 +31,7 @@ const User = () => {
   return (
     <li className="py-3 sm:py-4">
       <div className="flex items-center space-x-4 group cursor-pointer">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <img
             className="w-8 h-8 rounded-full"
             src="https://p.kindpng.com/picc/s/630-6306130_avatar-avatar-male-user-icon-hd-png-download.png"

@@ -34,7 +34,7 @@ const ArticlesDetails = () => {
 
           {/* <!--author avator--> */}
           <div className="flex space-x-3 mt-5">
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <img
                 className="w-12 h-12 rounded-full object-cover "
                 src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"

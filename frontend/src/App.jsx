@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "./components/shared/footer/Footer";
 import Routers from "./routes/Routers";
 
 const App2 = () => {
@@ -45,9 +46,7 @@ const App = () => {
   return (
     <>
       <Routers />
-      {/* <CustomResigter /> */}
-      {/* <RelatedArticles /> */}
-      {/* <ArticlesDetails /> */}
+      <Footer />
     </>
   );
 };

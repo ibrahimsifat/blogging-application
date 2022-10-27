@@ -2,11 +2,13 @@ import React from "react";
 import { AiFillHome } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { IoIosNotifications } from "react-icons/io";
+import { Route, Routes } from "react-router-dom";
 import OldestArticles from "../../components/home/oldestArticles/OldestArticles";
 import RecentArticles from "../../components/home/recent-articles/RecentArticles";
 import Categories from "../../components/home/recomendedCategory/Categories";
 import Tags from "../../components/home/tags/Tags";
 import Writers from "../../components/home/want-follow/Writers";
+import HomeArticles from "./articles/HomeArticles";
 import ArticlesDetails from "./articlesDetails/ArticlesDetails";
 import {
   HomeContainer,
@@ -37,7 +39,10 @@ const Home = () => {
         </HomeLeftContainer>
         {/* section 2 */}
         {/* <HomeArticles /> */}
-        <ArticlesDetails />
+        <Routes>
+          <Route path="/" element={<HomeArticles />} />
+          <Route path="/articles/:slug" element={<ArticlesDetails />} />
+        </Routes>
 
         {/* section 3 */}
         <HomeRightContainer>

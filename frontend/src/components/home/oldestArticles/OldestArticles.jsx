@@ -31,7 +31,7 @@ const Article = () => {
   return (
     <li className="py-3 sm:py-4">
       <div className="flex items-center space-x-4 cursor-pointer group">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <img
             className="w-5 h-5 rounded-full"
             src="https://p.kindpng.com/picc/s/630-6306130_avatar-avatar-male-user-icon-hd-png-download.png"

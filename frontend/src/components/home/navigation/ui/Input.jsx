@@ -7,7 +7,6 @@ const Input = tw.input`w-full px-3 py-2 placeholder-gray-300 border border-gray-
 // label
 const InputLabel = tw.label`block mb-2 text-sm text-gray-400`;
 const InputContainer = tw.div`mb-6 relative`;
-const ErrorMessage = tw.div`font-md text-red-500`;
 
 const InputGroup = ({
   type,
@@ -35,7 +34,8 @@ const InputGroup = ({
         onBlur={onBlur}
         error={error}
       />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+
+      {error && <HelperText valid={false}>{error}</HelperText>}
     </InputContainer>
   );
 };
