@@ -7,6 +7,7 @@ import ThemedSuspense from "../components/ThemedSuspense";
 import Main from "../containers/Main";
 import { SidebarContext } from "../context/SidebarContext";
 import Articles from "../pages/Articles";
+import AddArticles from "../pages/articles/AddArticles";
 import Categories from "../pages/Categories";
 import Comments from "../pages/Comments";
 import CreateAccount from "../pages/CreateAccount";
@@ -45,6 +46,7 @@ function Layout({ children }) {
               <Route path="/users" element={<Users />} />
               <Route path="/comments" element={<Comments />} />
               <Route path="/articles" element={<Articles />} />
+              <Route path="/article/add" element={<AddArticles />} />
               <Route path="create-account" element={<CreateAccount />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<Page404 />} />

@@ -14,7 +14,7 @@ const routes = [
         name: "All Articles",
       },
       {
-        path: "/dashboard/add-article",
+        path: "/dashboard/article/add",
         name: "Add Articles",
       },
     ],
