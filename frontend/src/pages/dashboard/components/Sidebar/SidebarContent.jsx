@@ -34,7 +34,7 @@ function SidebarContent() {
                 }
               >
                 <Icon
-                  className="w-5 h-5"
+                  className="w-5 h-5 text-white"
                   aria-hidden="true"
                   icon={route.icon}
                 />

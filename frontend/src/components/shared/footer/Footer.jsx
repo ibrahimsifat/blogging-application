@@ -1,23 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { FooterNav } from "./ui";
 
 const Footer = () => {
   return (
-    <footer class="bg-gradient-to-r from-white via-[#d0e7fa] to-white z-50 mt-6">
-      <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+    <footer className="bg-gradient-to-r from-white via-[#d0e7fa] to-white z-50 mt-6">
+      <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
-            <p class="mr-5 h-6 sm:h-9">Binary Note</p>
-            <p class="max-w-xs mt-4 text-sm text-gray-600">
+            <p className="mr-5 h-6 sm:h-9">Binary Note</p>
+            <p className="max-w-xs mt-4 text-sm text-gray-600">
               A Node.js-based, multi-author blogging system similar to Medium. I
               developed the blogging features, including multi-level commenting,
               recommendations, full-text searching, an admin dashboard, and
               more.
             </p>
-            <div class="flex mt-8 space-x-6 text-gray-600">
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Facebook </span>
+            <div className="flex mt-8 space-x-6 text-gray-600">
+              <Link to="/">
+                <span className="sr-only"> Facebook </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -28,11 +30,11 @@ const Footer = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Instagram </span>
+              </Link>
+              <Link to="/">
+                <span className="sr-only"> Instagram </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -43,22 +45,22 @@ const Footer = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Twitter </span>
+              </Link>
+              <Link to="/">
+                <span className="sr-only"> Twitter </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
-              </a>
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> GitHub </span>
+              </Link>
+              <Link to="/">
+                <span className="sr-only"> GitHub </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -69,11 +71,11 @@ const Footer = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Dribbble </span>
+              </Link>
+              <Link to="/">
+                <span className="sr-only"> Dribbble </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -84,100 +86,71 @@ const Footer = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
-          <div class="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <p class="font-medium">Company</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  About{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Meet the Team{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  History{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Careers{" "}
-                </a>
-              </nav>
+              <p className="font-medium">Company</p>
+              <FooterNav>
+                <FooterLink value="About" link="/" />
+
+                <FooterLink value="Meet the Team" link="/" />
+
+                <FooterLink value="History" link="/" />
+
+                <FooterLink value="Careers" link="/" />
+              </FooterNav>
             </div>
             <div>
-              <p class="font-medium">Services</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  1on1 Coaching{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Company Review{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Accounts Review{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  HR Consulting{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  SEO Optimisation{" "}
-                </a>
-              </nav>
+              <p className="font-medium">Services</p>
+              <FooterNav>
+                <FooterLink value="1on1 Coaching" link="/" />
+
+                <FooterLink value="Company Review" link="/" />
+
+                <FooterLink value="Accounts Review" link="/" />
+
+                <FooterLink value="HR Consulting" link="/" />
+
+                <FooterLink value="SEO Optimisation" link="/" />
+              </FooterNav>
             </div>
             <div>
-              <p class="font-medium">Helpful Links</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Contact{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  FAQs{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Live Chat{" "}
-                </a>
-              </nav>
+              <p className="font-medium">Helpful Links</p>
+              <FooterNav>
+                <FooterLink value="Contact" link="/" />
+
+                <FooterLink value=" FAQs" link="/" />
+
+                <FooterLink value="Live Chat" link="/" />
+              </FooterNav>
             </div>
             <div>
-              <p class="font-medium">Legal</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Privacy Policy{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Terms &amp; Conditions{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Returns Policy{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Accessibility{" "}
-                </a>
-              </nav>
+              <p className="font-medium">Legal</p>
+              <FooterNav>
+                <FooterLink value="Privacy Policy" link="/" />
+
+                <FooterLink value=" Terms &amp; Conditions" link="/" />
+
+                <FooterLink value="Returns Policy" link="/" />
+
+                <FooterLink value="Accessibility" link="/" />
+              </FooterNav>
             </div>
           </div>
         </div>
-        <p class="mt-8 text-xs text-gray-800">© 2022 Binary Note</p>
+        <p className="mt-8 text-xs text-gray-800">© 2022 Binary Note</p>
       </div>
     </footer>
   );
 };
 
 export default Footer;
+const FooterLink = ({ value, link }) => {
+  return (
+    <Link to={link} className="hover:opacity-75" href>
+      {value}
+    </Link>
+  );
+};

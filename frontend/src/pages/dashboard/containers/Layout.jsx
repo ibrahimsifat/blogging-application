@@ -6,15 +6,17 @@ import Sidebar from "../components/Sidebar";
 import ThemedSuspense from "../components/ThemedSuspense";
 import Main from "../containers/Main";
 import { SidebarContext } from "../context/SidebarContext";
+import Articles from "../pages/Articles";
+import Categories from "../pages/Categories";
+import Comments from "../pages/Comments";
+import CreateAccount from "../pages/CreateAccount";
+import ForgotPassword from "../pages/ForgotPassword";
+import Tags from "../pages/Tags";
+import Users from "../pages/Users";
 const Admin = lazy(() => import("../pages/Admin"));
-const Forms = lazy(() => import("../pages/Forms"));
-const Cards = lazy(() => import("../pages/Cards"));
+const Forms = lazy(() => import("../pages/Categories"));
 
-const Buttons = lazy(() => import("../pages/Buttons"));
-const Modals = lazy(() => import("../pages/Modals"));
-const Tables = lazy(() => import("../pages/Tables"));
 const Page404 = lazy(() => import("../pages/404"));
-const Blank = lazy(() => import("../pages/Blank"));
 
 function Layout({ children }) {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
@@ -38,11 +40,24 @@ function Layout({ children }) {
           <Suspense fallback={<ThemedSuspense />}>
             <Routes>
               <Route path="/" element={<Admin />} />
-              <Route path="/forms" element={<Forms />} />
-              <Route path="/cards" element={<Cards />} />
-              <Route path="/buttons" element={<Buttons />} />
-              <Route path="/modals" element={<Modals />} />
-              <Route path="/tables" element={<Tables />} />
+              <Route path="/category" element={<Categories />} />
+              <Route path="/tags" element={<Tags />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/comments" element={<Comments />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="create-account" element={<CreateAccount />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="*" element={<Page404 />} />
+              {/* {routes.map((route, i) => {
+                console.log(route);
+                return (
+                  <Route
+                    key={i}
+                    path={`/dashboard${route.path}`}
+                    element={<route.component />}
+                  />
+                );
+              })} */}
             </Routes>
             {/* <Admin /> */}
           </Suspense>

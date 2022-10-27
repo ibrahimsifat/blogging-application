@@ -1,10 +1,3 @@
-/**
- * ⚠ These are used just to render the Sidebar!
- * You can include any link here, local or external.
- *
- * If you're looking to actual Router routes, go to
- * `routes/index.js`
- */
 const routes = [
   {
     path: "/dashboard", // the url
@@ -12,30 +5,70 @@ const routes = [
     name: "Dashboard", // name that appear in Sidebar
   },
   {
-    path: "/dashboard/forms",
-    icon: "FormsIcon",
-    name: "Forms",
+    icon: "Articles",
+    name: "Articles",
+    routes: [
+      // submenu
+      {
+        path: "/dashboard/articles",
+        name: "All Articles",
+      },
+      {
+        path: "/dashboard/add-article",
+        name: "Add Articles",
+      },
+    ],
   },
   {
-    path: "/dashboard/cards",
+    icon: "CategoryIcon",
+    name: "Category",
+    routes: [
+      // submenu
+      {
+        path: "/dashboard/category",
+        name: "All Category",
+      },
+      {
+        path: "/dashboard/add-category",
+        name: "Add Category",
+      },
+    ],
+  },
+  {
     icon: "CardsIcon",
-    name: "Cards",
+    name: "Tags",
+    routes: [
+      // submenu
+      {
+        path: "/dashboard/tags",
+        name: "All Tags",
+      },
+      {
+        path: "/dashboard/add-tags",
+        name: "Add Tags",
+      },
+    ],
   },
 
   {
-    path: "/dashboard/buttons",
     icon: "ButtonsIcon",
-    name: "Buttons",
+    name: "Users",
+    routes: [
+      // submenu
+      {
+        path: "/dashboard/users",
+        name: "All Users",
+      },
+      {
+        path: "/dashboard/add-user",
+        name: "Add User",
+      },
+    ],
   },
   {
-    path: "/dashboard/modals",
+    path: "/dashboard/comments",
     icon: "ModalsIcon",
-    name: "Modals",
-  },
-  {
-    path: "/dashboard/tables",
-    icon: "TablesIcon",
-    name: "Tables",
+    name: "Comments",
   },
   {
     icon: "PagesIcon",
@@ -43,15 +76,11 @@ const routes = [
     routes: [
       // submenu
       {
-        path: "/login",
-        name: "Login",
-      },
-      {
-        path: "/create-account",
+        path: "/dashboard/create-account",
         name: "Create account",
       },
       {
-        path: "/forgot-password",
+        path: "/dashboard/forgot-password",
         name: "Forgot password",
       },
       {

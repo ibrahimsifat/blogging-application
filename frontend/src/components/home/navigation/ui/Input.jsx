@@ -7,7 +7,7 @@ const Input = tw.input`w-full px-3 py-2 placeholder-gray-300 border border-gray-
 // label
 const InputLabel = tw.label`block mb-2 text-sm text-gray-400`;
 const InputContainer = tw.div`mb-6 relative`;
-
+const ErrorMessage = tw.small`text-red-500 `;
 const InputGroup = ({
   type,
   name,
@@ -22,7 +22,7 @@ const InputGroup = ({
 }) => {
   return (
     <InputContainer>
-      <InputLabel for={id}>{label}</InputLabel>
+      <InputLabel htmlFor={id}>{label}</InputLabel>
       <Input
         type={type}
         name={name}
@@ -35,7 +35,7 @@ const InputGroup = ({
         error={error}
       />
 
-      {error && <HelperText valid={false}>{error}</HelperText>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </InputContainer>
   );
 };

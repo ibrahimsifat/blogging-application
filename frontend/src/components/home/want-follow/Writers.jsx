@@ -1,19 +1,11 @@
 import React from "react";
+import { FilterSectionContainer } from "../../shared/homeFilterSection/FilterSectionContainer";
+import FilterSectionHeading from "../../shared/homeFilterSection/FilterSectionHeading";
 
 const Writers = () => {
   return (
-    <div className="p-4 w-full max-w-md bg-white rounded-lg sm:p-8 ">
-      <div className="flex justify-between items-center mb-4">
-        <h5 className="text-xl font-bold leading-none text-gray-900 ">
-          Who to follow
-        </h5>
-        <a
-          href="#"
-          className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-        >
-          View all
-        </a>
-      </div>
+    <FilterSectionContainer>
+      <FilterSectionHeading title="Want to Follow" />
       <div className="flow-root">
         <ul role="list" className="divide-y divide-gray-200 ">
           <User />
@@ -23,7 +15,7 @@ const Writers = () => {
           <User />
         </ul>
       </div>
-    </div>
+    </FilterSectionContainer>
   );
 };
 
