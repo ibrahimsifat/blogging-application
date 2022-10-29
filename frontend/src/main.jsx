@@ -2,9 +2,11 @@ import { Windmill } from "@windmill/react-ui";
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import ThemedSuspense from "./components/dashboard/ThemedSuspense";
+
 import "./index.css";
-import ThemedSuspense from "./pages/dashboard/components/ThemedSuspense";
-import { SidebarProvider } from "./pages/dashboard/context/SidebarContext";
+
+import { SidebarProvider } from "./context/dashboard/SidebarContext";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <SidebarProvider>

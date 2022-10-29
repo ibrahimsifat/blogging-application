@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Backdrop, Transition } from "@windmill/react-ui";
 import SidebarContent from "./SidebarContent";
 
-import { SidebarContext } from "../../context/SidebarContext";
+import { SidebarContext } from "../../../context/dashboard/SidebarContext";
 
 function MobileSidebar() {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);

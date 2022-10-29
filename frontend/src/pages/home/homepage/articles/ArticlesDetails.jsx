@@ -2,9 +2,8 @@ import React from "react";
 import RelatedArticles from "../../../../components/home/articles/relatedArticles/RelatedArticles";
 import Navbar from "../../../../components/home/navigation/Navbar";
 
+import ArticlesComments from "../../../../components/home/articles/articlesDetails/articlecomments";
 import ArticleLikeUnlike from "../../../../components/home/articles/articlesDetails/ArticleLikeUnlike";
-import ArticlesComments from "../../../../components/home/articles/articlesDetails/articlesComments";
-import CommentFrom from "../../../../components/home/articles/articlesDetails/CommentFrom";
 import ReadMoreArticle from "../../../../components/home/articles/articlesDetails/ReadMoreArticle";
 import RelatedTags from "../../../../components/home/articles/articlesDetails/RelatedTags";
 import SocialShare from "../../../../components/home/articles/articlesDetails/SocialShare";
@@ -80,7 +79,6 @@ const ArticlesDetails = () => {
         <RelatedTags />
         <SocialShare />
         <RelatedArticles />
-        <CommentFrom />
         <ArticlesComments />
       </div>
     </HomeCenterContainer>

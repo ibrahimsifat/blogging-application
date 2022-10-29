@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import SectionTitle from "../../../components/dashboard/Typography/SectionTitle";
+import SectionTitle from "../../components/dashboard/Typography/SectionTitle";
 
 import {
   Avatar,
@@ -15,14 +15,14 @@ import {
   TableHeader,
   TableRow,
 } from "@windmill/react-ui";
-import { EditIcon, TrashIcon } from "../../../assets/dashboard/icons";
+import { EditIcon, TrashIcon } from "../../assets/dashboard/icons";
 
-import { DarkInput } from "../../../components/shared/input/DarkInput";
-import response from "../../../utils/demo/tableData";
+import { DarkInput } from "../../components/shared/input/DarkInput";
+import response from "../../utils/demo/tableData";
 // make a copy of the data, for the second table
 const response2 = response.concat([]);
 
-function Categories() {
+function Tags() {
   /**
    * DISCLAIMER: This code could be badly improved, but for the sake of the example
    * and readability, all the logic for both table are here.
@@ -77,7 +77,7 @@ function Categories() {
 
   return (
     <>
-      <SectionTitle className="mt-10">All Categories</SectionTitle>
+      <SectionTitle className="mt-10">All Tags</SectionTitle>
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
@@ -148,4 +148,4 @@ function Categories() {
   );
 }
 
-export default Categories;
+export default Tags;

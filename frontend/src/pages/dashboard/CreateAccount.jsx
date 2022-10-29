@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { Button, Input, Label } from "@windmill/react-ui";
-import ImageDark from "../assets/img/create-account-office-dark.jpeg";
-import ImageLight from "../assets/img/create-account-office.jpeg";
-import { GithubIcon, TwitterIcon } from "../icons";
+import {
+  default as ImageDark,
+  default as ImageLight,
+} from "../../assets/create-account.jpg";
+import { GithubIcon, TwitterIcon } from "../../assets/dashboard/icons";
 
 function CreateAccount() {
   return (

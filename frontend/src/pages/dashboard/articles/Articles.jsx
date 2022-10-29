@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import SectionTitle from "../../../components/dashboard/Typography/SectionTitle";
-
 import {
   Avatar,
   Badge,
@@ -17,20 +15,13 @@ import {
 } from "@windmill/react-ui";
 import { EditIcon, TrashIcon } from "../../../assets/dashboard/icons";
 
+import SectionTitle from "../../../components/dashboard/Typography/SectionTitle";
 import { DarkInput } from "../../../components/shared/input/DarkInput";
 import response from "../../../utils/demo/tableData";
 // make a copy of the data, for the second table
 const response2 = response.concat([]);
 
-function Categories() {
-  /**
-   * DISCLAIMER: This code could be badly improved, but for the sake of the example
-   * and readability, all the logic for both table are here.
-   * You would be better served by dividing each table in its own
-   * component, like Table(?) and TableWithActions(?) hiding the
-   * presentation details away from the page view.
-   */
-
+function Articles() {
   // setup pages control for every table
   const [pageTable1, setPageTable1] = useState(1);
   const [pageTable2, setPageTable2] = useState(1);
@@ -77,7 +68,7 @@ function Categories() {
 
   return (
     <>
-      <SectionTitle className="mt-10">All Categories</SectionTitle>
+      <SectionTitle className="mt-10">Table with actions</SectionTitle>
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
@@ -148,4 +139,4 @@ function Categories() {
   );
 }
 
-export default Categories;
+export default Articles;

@@ -1,8 +1,8 @@
 import { Button } from "@windmill/react-ui";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import * as Icons from "../../icons";
-import routes from "../../routes/sidebar";
+import * as Icons from "../../../assets/dashboard/icons";
+import routes from "../../../routes/dashboardRoutes/sidebar";
 import SidebarSubmenu from "./SidebarSubmenu";
 
 function Icon({ icon, ...props }) {

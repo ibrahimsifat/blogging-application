@@ -6,7 +6,6 @@ import {
   WindmillContext,
 } from "@windmill/react-ui";
 import React, { useContext, useState } from "react";
-import { SidebarContext } from "../context/SidebarContext";
 import {
   BellIcon,
   MenuIcon,
@@ -16,7 +15,8 @@ import {
   OutlinePersonIcon,
   SearchIcon,
   SunIcon,
-} from "../icons";
+} from "../../assets/dashboard/icons";
+import { SidebarContext } from "../../context/dashboard/SidebarContext";
 
 function Header() {
   const { mode, toggleMode } = useContext(WindmillContext);

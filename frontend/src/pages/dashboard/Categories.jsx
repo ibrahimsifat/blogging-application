@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import SectionTitle from "../../../components/dashboard/Typography/SectionTitle";
+import SectionTitle from "../../components/dashboard/Typography/SectionTitle";
 
 import {
   Avatar,
@@ -15,10 +15,10 @@ import {
   TableHeader,
   TableRow,
 } from "@windmill/react-ui";
-import { EditIcon, TrashIcon } from "../../../assets/dashboard/icons";
+import { EditIcon, TrashIcon } from "../../assets/dashboard/icons";
 
-import { DarkInput } from "../../../components/shared/input/DarkInput";
-import response from "../../../utils/demo/tableData";
+import { DarkInput } from "../../components/shared/input/DarkInput";
+import response from "../../utils/demo/tableData";
 // make a copy of the data, for the second table
 const response2 = response.concat([]);
 

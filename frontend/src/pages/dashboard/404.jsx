@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { ForbiddenIcon } from "../icons";
+import { ForbiddenIcon } from "../../assets/dashboard/icons";
 
 function Page404() {
   return (

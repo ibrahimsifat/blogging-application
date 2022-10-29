@@ -1,23 +1,21 @@
 import React, { lazy, Suspense, useContext, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { SidebarContext } from "../../../context/dashboard/SidebarContext";
 
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
-import ThemedSuspense from "../components/ThemedSuspense";
-import Main from "../containers/Main";
-import { SidebarContext } from "../context/SidebarContext";
-import Articles from "../pages/Articles";
-import AddArticles from "../pages/articles/AddArticles";
-import Categories from "../pages/Categories";
-import Comments from "../pages/Comments";
-import CreateAccount from "../pages/CreateAccount";
-import ForgotPassword from "../pages/ForgotPassword";
-import Tags from "../pages/Tags";
-import Users from "../pages/Users";
-const Admin = lazy(() => import("../pages/Admin"));
-const Forms = lazy(() => import("../pages/Categories"));
-
-const Page404 = lazy(() => import("../pages/404"));
+import AddArticles from "../../../pages/dashboard/articles/AddArticles";
+import Articles from "../../../pages/dashboard/articles/Articles";
+import Categories from "../../../pages/dashboard/Categories";
+import Comments from "../../../pages/dashboard/Comments";
+import CreateAccount from "../../../pages/dashboard/CreateAccount";
+import ForgotPassword from "../../../pages/dashboard/ForgotPassword";
+import Tags from "../../../pages/dashboard/Tags";
+import Users from "../../../pages/dashboard/Users";
+import Header from "../Header";
+import Sidebar from "../Sidebar";
+import ThemedSuspense from "../ThemedSuspense";
+import Main from "./Main";
+const Admin = lazy(() => import("../../../pages/dashboard/Admin"));
+const Page404 = lazy(() => import("../../../pages/dashboard/404"));
 
 function Layout({ children }) {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);

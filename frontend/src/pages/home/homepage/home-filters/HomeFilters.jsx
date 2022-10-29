@@ -1,18 +1,18 @@
 import React from "react";
 import OldestArticles from "../../../../components/home/articles/filters-articles/OldestArticles";
 import RecentArticles from "../../../../components/home/articles/filters-articles/RecentArticles";
-import Categories from "../../../../components/home/recomended/Categories";
-import Tags from "../../../../components/home/recomended/Tags";
-import Writers from "../../../../components/home/want-follow/Writers";
+import RecommendedCategories from "../../../../components/home/recommended/Categories";
+import Tags from "../../../../components/home/recommended/Tags";
+import WantFollowWriters from "../../../../components/home/want-follow/Writers";
 
 import { HomeRightContainer } from "../../ui/HomeUi";
 
 const HomeFilters = () => {
   return (
     <HomeRightContainer>
-      <Categories />
+      <RecommendedCategories />
       <RecentArticles />
-      <Writers />
+      <WantFollowWriters />
       <Tags />
       <OldestArticles />
     </HomeRightContainer>

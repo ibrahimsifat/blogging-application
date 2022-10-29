@@ -6,11 +6,11 @@ import {
   ChatIcon,
   MoneyIcon,
   PeopleIcon,
-} from "../../../assets/dashboard/icons";
-import InfoCard from "../../../components/dashboard/Cards/InfoCard";
-import RoundIcon from "../../../components/dashboard/RoundIcon";
-import PageTitle from "../../../components/dashboard/Typography/PageTitle";
-import response from "../../../utils/demo/tableData";
+} from "../../assets/dashboard/icons";
+import InfoCard from "../../components/dashboard/Cards/InfoCard";
+import RoundIcon from "../../components/dashboard/RoundIcon";
+import PageTitle from "../../components/dashboard/Typography/PageTitle";
+import response from "../../utils/demo/tableData";
 const chatData = {
   options: {
     chart: {
@@ -82,7 +82,7 @@ function Admin() {
       <PageTitle>Dashboard</PageTitle>
 
       {/* <!-- Cards --> */}
-      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 no-scrollbar">
+      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 ">
         <InfoCard title="Total clients" value="6389">
           <RoundIcon
             icon={PeopleIcon}

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import Footer from "../components/shared/footer/Footer";
-import Login from "../pages/auth/Login";
-import Register from "../pages/auth/Register";
-import Layout from "../pages/dashboard/containers/Layout";
-import Home from "../pages/home/Home";
+const Login = lazy(() => import("../pages/auth/Login"));
+const Register = lazy(() => import("../pages/auth/Register"));
+const Home = lazy(() => import("../pages/home/Home"));
+
+const Layout = lazy(() => import("../components/dashboard/containers/Layout"));
 const Routers = () => {
   return (
     <BrowserRouter>
