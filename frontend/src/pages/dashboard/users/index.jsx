@@ -105,6 +105,7 @@ function Users() {
                 <DarkInput type="text" placeholder="Search Tags" />
               </TableCell>
 
+              <TableCell>Profile</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Edit</TableCell>
               <TableCell>Delete</TableCell>
@@ -128,11 +129,19 @@ function Users() {
                     </div>
                   </div>
                 </TableCell>
-
+                <TableCell>
+                  <div className="flex items-center text-sm">
+                    <Avatar
+                      className="hidden mr-3 md:block"
+                      src={user.avatar}
+                      alt="User avatar"
+                    />
+                  </div>
+                </TableCell>
                 <TableCell>
                   <Select className="mt-1 bg-gray-800 w-6/12 ">
                     <option>Pending</option>
-
+                    <option>Block</option>
                     <option>Approved</option>
                   </Select>
                 </TableCell>

@@ -1,10 +1,11 @@
 import React, { lazy, Suspense, useContext, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { SidebarContext } from "../../../context/dashboard/SidebarContext";
-import AddUser from "../../../pages/dashboard/admins/add";
-import UpdateUser from "../../../pages/dashboard/admins/update";
-import Users from "../../../pages/dashboard/admins/Users";
 
+import Admins from "../../../pages/dashboard/admins";
+import AddAdmin from "../../../pages/dashboard/admins/add";
+import AdminProfile from "../../../pages/dashboard/admins/adminProfile";
+import UpdateAdmin from "../../../pages/dashboard/admins/update";
 import AddArticles from "../../../pages/dashboard/articles/AddArticles";
 import Articles from "../../../pages/dashboard/articles/Articles";
 import AddCategory from "../../../pages/dashboard/categories/add";
@@ -16,12 +17,14 @@ import ForgotPassword from "../../../pages/dashboard/ForgotPassword";
 import AddTags from "../../../pages/dashboard/tags/add";
 import Tags from "../../../pages/dashboard/tags/Tags";
 import UpdateTags from "../../../pages/dashboard/tags/update";
-
+import Users from "../../../pages/dashboard/users";
+import AddUser from "../../../pages/dashboard/users/add";
+import UpdateUser from "../../../pages/dashboard/users/update";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import ThemedSuspense from "../ThemedSuspense";
 import Main from "./Main";
-const Admin = lazy(() => import("../../../pages/dashboard/Admin"));
+const Admin = lazy(() => import("../../../pages/dashboard/home/Admin"));
 const Page404 = lazy(() => import("../../../pages/dashboard/404"));
 
 function Layout({ children }) {
@@ -62,26 +65,25 @@ function Layout({ children }) {
               <Route path="/tag/add" element={<AddTags />} />
               <Route path="/tag/edit/:tagId" element={<UpdateTags />} />
 
-              {/* Admins routes */}
+              {/* Admin routes */}
+              <Route path="/admins" element={<Admins />} />
+              <Route path="/admin/add" element={<AddAdmin />} />
+              <Route path="/admin/edit/:adminId" element={<UpdateAdmin />} />
+              <Route
+                path="/admin/profile/:adminId"
+                element={<AdminProfile />}
+              />
+
+              {/* Users routes */}
               <Route path="/users" element={<Users />} />
               <Route path="/user/add" element={<AddUser />} />
               <Route path="/user/edit/:userId" element={<UpdateUser />} />
+
               {/* create accounts */}
               <Route path="create-account" element={<CreateAccount />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<Page404 />} />
-              {/* {routes.map((route, i) => {
-                console.log(route);
-                return (
-                  <Route
-                    key={i}
-                    path={`/dashboard${route.path}`}
-                    element={<route.component />}
-                  />
-                );
-              })} */}
             </Routes>
-            {/* <Admin /> */}
           </Suspense>
         </Main>
       </div>

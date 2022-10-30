@@ -2,22 +2,22 @@ import { Button } from "@windmill/react-ui";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PageTitle from "../../../../components/dashboard/Typography/PageTitle";
-import AddUpdateAdminForm from "../AddUpdateAdminForm";
+import AddUpdateTagForm from "../AddUpdateTagForm";
 
-const UpdateAdmin = () => {
+const UpdateUser = () => {
   const [formDate, setFormDate] = useState({});
   console.log("user-edit", formDate);
   return (
     <div>
       <div className="flex justify-between items-center">
-        <PageTitle className="">Update Admin Details</PageTitle>
-        <Link to="/dashboard/admin/add">
-          <Button>Add Admin</Button>
+        <PageTitle className="">Update User Details</PageTitle>
+        <Link to="/dashboard/user/add">
+          <Button>Add User</Button>
         </Link>
       </div>
-      <AddUpdateAdminForm edit setFormDate={setFormDate} />
+      <AddUpdateTagForm edit setFormDate={setFormDate} />
     </div>
   );
 };
 
-export default UpdateAdmin;
+export default UpdateUser;

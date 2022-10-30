@@ -52,6 +52,21 @@ const routes = [
 
   {
     icon: "ButtonsIcon",
+    name: "Admins",
+    routes: [
+      // submenu
+      {
+        path: "/dashboard/admins",
+        name: "All Admins",
+      },
+      {
+        path: "/dashboard/admin/add",
+        name: "Add Admin",
+      },
+    ],
+  },
+  {
+    icon: "ButtonsIcon",
     name: "Users",
     routes: [
       // submenu

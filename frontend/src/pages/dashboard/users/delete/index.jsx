@@ -6,7 +6,7 @@ import {
   ModalHeader,
 } from "@windmill/react-ui";
 import React from "react";
-function AdminDelete({ isModalOpen, setIsModalOpen }) {
+function UserDelete({ isModalOpen, setIsModalOpen }) {
   function closeModal() {
     setIsModalOpen(false);
   }
@@ -14,7 +14,7 @@ function AdminDelete({ isModalOpen, setIsModalOpen }) {
     <>
       <div className="flex justify-center items-center">
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <ModalHeader>Delete Admin</ModalHeader>
+          <ModalHeader>Delete User</ModalHeader>
           <ModalBody>modlekjr</ModalBody>
           <ModalFooter>
             <Button
@@ -31,4 +31,4 @@ function AdminDelete({ isModalOpen, setIsModalOpen }) {
     </>
   );
 }
-export default AdminDelete;
+export default UserDelete;
