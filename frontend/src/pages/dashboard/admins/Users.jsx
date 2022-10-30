@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import SectionTitle from "../../../components/dashboard/Typography/SectionTitle";
-
 import {
   Avatar,
-  Badge,
   Button,
   Pagination,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -17,12 +15,15 @@ import {
 } from "@windmill/react-ui";
 import { EditIcon, TrashIcon } from "../../../assets/dashboard/icons";
 
+import { Link } from "react-router-dom";
+import PageTitle from "../../../components/dashboard/Typography/PageTitle";
 import { DarkInput } from "../../../components/shared/input/DarkInput";
 import response from "../../../utils/demo/tableData";
+import ModalPage from "./delete";
 // make a copy of the data, for the second table
 const response2 = response.concat([]);
 
-function Tags() {
+function Users() {
   /**
    * DISCLAIMER: This code could be badly improved, but for the sake of the example
    * and readability, all the logic for both table are here.
@@ -75,21 +76,38 @@ function Tags() {
     );
   }, [pageTable2]);
 
+  // category edit
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  function openDeleteModal() {
+    setIsDeleteModalOpen(true);
+  }
   return (
     <>
-      <SectionTitle className="mt-10">All Tags</SectionTitle>
+      <ModalPage
+        isModalOpen={isDeleteModalOpen}
+        setIsModalOpen={setIsDeleteModalOpen}
+      />
+      <div className="flex justify-between items-center">
+        <PageTitle className="">All Users</PageTitle>
+        <Link to="/dashboard/user/add">
+          <Button>Add User</Button>
+        </Link>
+      </div>
+
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
             <tr>
               <TableCell className="flex items-center ">
-                <span className="md:mr-5 mr-3">Client</span>
-                <DarkInput type="text" placeholder="Search Articles" />
+                <span className="md:mr-5 mr-3">User</span>
+                <DarkInput type="text" placeholder="Search Tags" />
               </TableCell>
-              <TableCell>Amount</TableCell>
+
               <TableCell>Status</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
@@ -110,26 +128,30 @@ function Tags() {
                     </div>
                   </div>
                 </TableCell>
+
                 <TableCell>
-                  <span className="text-sm">$ {user.amount}</span>
+                  <Select className="mt-1 bg-gray-800 w-6/12 ">
+                    <option>Pending</option>
+
+                    <option>Approved</option>
+                  </Select>
                 </TableCell>
                 <TableCell>
-                  <Badge type={user.status}>{user.status}</Badge>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">
-                    {new Date(user.date).toLocaleDateString()}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center space-x-4">
+                  <Link to="/dashboard/user/edit/12">
                     <Button layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
-                    <Button layout="link" size="icon" aria-label="Delete">
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                  </div>
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    layout="link"
+                    size="icon"
+                    aria-label="Delete"
+                    onClick={openDeleteModal}
+                  >
+                    <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -148,4 +170,4 @@ function Tags() {
   );
 }
 
-export default Tags;
+export default Users;

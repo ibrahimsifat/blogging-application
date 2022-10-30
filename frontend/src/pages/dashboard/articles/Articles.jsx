@@ -15,7 +15,8 @@ import {
 } from "@windmill/react-ui";
 import { EditIcon, TrashIcon } from "../../../assets/dashboard/icons";
 
-import SectionTitle from "../../../components/dashboard/Typography/SectionTitle";
+import { Link } from "react-router-dom";
+import PageTitle from "../../../components/dashboard/Typography/PageTitle";
 import { DarkInput } from "../../../components/shared/input/DarkInput";
 import response from "../../../utils/demo/tableData";
 // make a copy of the data, for the second table
@@ -68,7 +69,14 @@ function Articles() {
 
   return (
     <>
-      <SectionTitle className="mt-10">Table with actions</SectionTitle>
+      <div className="flex justify-between items-center">
+        {" "}
+        <PageTitle className="">All Articles</PageTitle>{" "}
+        <Link to="/dashboard/article/add">
+          {" "}
+          <Button>Add Article</Button>
+        </Link>
+      </div>
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>

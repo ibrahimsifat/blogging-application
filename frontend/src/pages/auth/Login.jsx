@@ -1,7 +1,7 @@
+import { Button } from "@windmill/react-ui";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
-import InputGroup from "../../components/home/navigation/ui/Input";
-import Button from "../../components/shared/ui/Button/Button";
+import InputGroup from "../../components/shared/input/Input";
 import ProcessBtn from "../../components/shared/ui/Button/ProcessBtn";
 import UseForm from "../../hooks/useForm";
 import AuthFormHeading from "./ui/AuthFormHeading";
@@ -72,7 +72,6 @@ const Login = () => {
             />
 
             <Button
-              $primary
               type="submit"
               disabled={
                 state?.email?.value?.length < 8 || state?.password?.value < 4

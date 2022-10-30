@@ -3,6 +3,7 @@ import tw from "tailwind-styled-components";
 const Button = tw.button`
 flex uppercase  shadow items-center
 focus:shadow-outline focus:outline-none text-white  px-10 rounded
+
  ${(p) =>
    p.$primary
      ? "bg-blue-600 hover:bg-blue-700"

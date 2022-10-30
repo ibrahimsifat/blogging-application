@@ -1,6 +1,6 @@
+import { Button } from "@windmill/react-ui";
 import React, { useState } from "react";
-import InputGroup from "../../components/home/navigation/ui/Input";
-import Button from "../../components/shared/ui/Button/Button";
+import InputGroup from "../../components/shared/input/Input";
 import ProcessBtn from "../../components/shared/ui/Button/ProcessBtn";
 import UseForm from "../../hooks/useForm";
 import AuthFormHeading from "./ui/AuthFormHeading";
@@ -84,9 +84,7 @@ const Register = () => {
               error={state.password.error}
             />
 
-            <Button $primary type="submit">
-              Submit
-            </Button>
+            <Button type="submit">Submit</Button>
             <ProcessBtn label="Submitting..." />
           </Form>
         </div>

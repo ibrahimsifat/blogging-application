@@ -1,38 +1,47 @@
+import { Button } from "@windmill/react-ui";
 import JoditEditor from "jodit-react";
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 import PageTitle from "../../../components/dashboard/Typography/PageTitle";
-import InputGroup from "../../../components/home/navigation/ui/Input";
-import Button from "../../../components/shared/ui/Button/Button";
+import InputGroup, { InputLabel } from "../../../components/shared/input/Input";
 import ProcessBtn from "../../../components/shared/ui/Button/ProcessBtn";
 import UseForm from "../../../hooks/useForm";
 import Form from "../../auth/ui/Form";
-
+import ModalPage from "../categories/delete";
+import { selectCategory, selectTags } from "./data";
+import UseUpload from "./UseUpload";
 const init = {
-  username: "",
-  email: "",
-  password: "",
+  title: "",
+  slug: "",
+  category: [],
+  tags: [],
+  image: "",
 };
 const validate = (values) => {
   let errors = {};
-  if (!values.username) {
-    errors.username = "Username is required";
+  if (!values.title) {
+    errors.title = "Title is required";
   }
-  if (!values.email) {
-    errors.email = "Email is required";
+  if (!values.slug) {
+    errors.slug = "Slug is required";
   }
-  if (!values.password) {
-    errors.password = "Password is required";
-  }
+
   return errors;
 };
 const AddArticles = () => {
+  // article details
   const [text, setText] = useState("");
+  const [submitError, setSubmitError] = useState([]);
   const editor = useRef();
   const config = {
     readonly: false,
+    theme: "default",
   };
-
+  // Jodit.make("#editor", {
+  //   "theme": "dark"
+  // });
+  // handle form state
   const [disableSubmit, setDisableSubmit] = useState(true);
   const {
     formState: state,
@@ -45,51 +54,93 @@ const AddArticles = () => {
 
   const cb = ({ hasError, values, errors }) => {
     if (hasError) {
-      console.log("[Error]" + JSON.stringify(errors));
+      const obj = errors;
+      const errorArray = Object.values(obj);
+      setSubmitError(errorArray);
     } else {
       console.log("[success]" + JSON.stringify(values));
     }
   };
+
+  // select
+  const [category, setCategory] = useState([]);
+  const [tags, setTags] = useState([]);
+  console.log(category);
+  const handleCategorySelect = (newValue) => {
+    const reduceValue = newValue?.map((value) => value?.value);
+    setCategory([...reduceValue]);
+  };
+  const handleTagsSelect = (newValue) => {
+    const reduceValue = newValue?.map((value) => value?.value);
+    setTags([...reduceValue]);
+  };
+
+  //  image upload
+  const [selectImage, setSelectImage] = useState(null);
+  console.log(selectImage);
+
   return (
     <>
+      <ModalPage />
       <PageTitle className="">Add new Articles</PageTitle>
       <div className="bg-white md:p-10 p-4">
         <Form onSubmit={(e) => handleSubmit(e, cb)}>
           <InputGroup
-            value={state.username.value}
+            value={state.title.value}
             type={"text"}
-            label={"Username"}
-            name={"username"}
-            placeholder={"test@example.com"}
+            label={"Title"}
+            name={"title"}
+            placeholder={"title"}
             onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            error={state.username.error}
+            error={state.title.error}
           />
           <InputGroup
-            value={state.email.value}
-            type={"email"}
-            label={"Email"}
-            name={"email"}
-            placeholder={"test@example.com"}
+            value={state.slug.value}
+            type={"text"}
+            label={"slug"}
+            name={"slug"}
+            placeholder={"javascript-event-loop-article"}
             onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            error={state.email.error}
+            error={state.slug.error}
           />
-          <InputGroup
-            value={state.password.value}
-            type={"password"}
-            label={"Password"}
-            name={"password"}
-            placeholder={"******"}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            error={state.password.error}
+          <div>
+            <InputLabel htmlFor={"selectCategory"}>
+              {"Select categories"}
+            </InputLabel>
+            <Select
+              required
+              isMulti
+              id="selectCategory"
+              name="category"
+              options={selectCategory}
+              className="basic-multi-select"
+              classNamePrefix="select category"
+              onChange={handleCategorySelect}
+            />
+          </div>
+          <div>
+            <InputLabel htmlFor={"selectTags"}>{"Select Tags"}</InputLabel>
+            <Select
+              required
+              isMulti
+              id="selectTags"
+              name="tags"
+              options={selectTags}
+              className="basic-multi-select"
+              classNamePrefix="select category"
+              onChange={handleTagsSelect}
+            />
+          </div>
+
+          <UseUpload
+            selectImage={selectImage}
+            setSelectImage={setSelectImage}
           />
           <JoditEditor
-            className="bg-white text-white"
             value={text}
             tabIndex={1}
             ref={editor}
@@ -99,9 +150,16 @@ const AddArticles = () => {
               console.log(newText);
             }}
           />
-          <Button $primary type="submit">
-            Submit
-          </Button>
+          {submitError && (
+            <ul>
+              {submitError.map((error, i) => (
+                <li className="text-red-500" key={i}>
+                  {error}
+                </li>
+              ))}
+            </ul>
+          )}
+          <Button type="submit">Submit</Button>
           <ProcessBtn label="Submitting..." />
         </Form>
       </div>

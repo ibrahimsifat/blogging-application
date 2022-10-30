@@ -29,7 +29,7 @@ const routes = [
         name: "All Category",
       },
       {
-        path: "/dashboard/add-category",
+        path: "/dashboard/category/add",
         name: "Add Category",
       },
     ],
@@ -44,7 +44,7 @@ const routes = [
         name: "All Tags",
       },
       {
-        path: "/dashboard/add-tags",
+        path: "/dashboard/tag/add",
         name: "Add Tags",
       },
     ],
@@ -60,7 +60,7 @@ const routes = [
         name: "All Users",
       },
       {
-        path: "/dashboard/add-user",
+        path: "/dashboard/user/add",
         name: "Add User",
       },
     ],
