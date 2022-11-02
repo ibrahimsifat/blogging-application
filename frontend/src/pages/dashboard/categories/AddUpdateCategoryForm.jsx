@@ -1,7 +1,6 @@
 import { Button } from "@windmill/react-ui";
-import { default as React, useState } from "react";
+import { default as React } from "react";
 import InputGroup from "../../../components/shared/input/Input";
-import ProcessBtn from "../../../components/shared/ui/Button/ProcessBtn";
 import UseForm from "../../../hooks/useForm";
 import Form from "../../auth/ui/Form";
 const init = {
@@ -19,7 +18,7 @@ const validate = (values) => {
 
   return errors;
 };
-const AddUpdateCategoryForm = ({ edit = false, setFormDate }) => {
+const AddUpdateCategoryForm = ({ edit = false, cb, isLoading }) => {
   const {
     formState: state,
     clear,
@@ -28,17 +27,7 @@ const AddUpdateCategoryForm = ({ edit = false, setFormDate }) => {
     handleFocus,
     handleSubmit,
   } = UseForm({ init, validate });
-  const [submitError, setSubmitError] = useState([]);
-  const cb = ({ hasError, values, errors }) => {
-    if (hasError) {
-      const obj = errors;
-      const errorArray = Object.values(obj);
-      setSubmitError(errorArray);
-    } else {
-      console.log("[success]" + JSON.stringify(values));
-      setFormDate(values);
-    }
-  };
+
   return (
     <>
       {/* form */}
@@ -65,21 +54,12 @@ const AddUpdateCategoryForm = ({ edit = false, setFormDate }) => {
           onBlur={handleBlur}
           error={state.description.error}
         />
-        {submitError && (
-          <ul>
-            {submitError.map((error, i) => (
-              <li className="text-red-500" key={i}>
-                {error}
-              </li>
-            ))}
-          </ul>
-        )}
+
         {edit ? (
           <Button type="submit">Update</Button>
         ) : (
           <Button type="submit">Add category</Button>
         )}
-        <ProcessBtn label="Submitting..." />
       </Form>
     </>
   );

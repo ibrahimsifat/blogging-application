@@ -1,5 +1,5 @@
 import React from "react";
-import useAuthCheck from "./hooks/useAuthCheck";
+import useAuthCheck from "./hooks/auth/useAuthCheck";
 
 import Routers from "./routes";
 const App = () => {

@@ -1,6 +1,7 @@
 import { Button } from "@windmill/react-ui";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SubmitError from "../../../components/shared/form/SubmitError";
 import InputGroup from "../../../components/shared/input/Input";
 import ProcessBtn from "../../../components/shared/ui/Button/ProcessBtn";
 import Error from "../../../components/shared/ui/Error";
@@ -32,6 +33,7 @@ const AdminLogin = () => {
   // login
   const [adminLogin, { data, isLoading, error: responseError }] =
     useAdminLoginMutation({});
+
   useEffect(() => {
     if (responseError?.data) {
       setError(responseError.data);
@@ -96,15 +98,11 @@ const AdminLogin = () => {
               error={state.password.error}
             />
             {submitError && (
-              <ul>
-                {submitError.map((error, i) => (
-                  <li className="text-red-500" key={i}>
-                    {error}
-                  </li>
-                ))}
-              </ul>
+              <SubmitError submitError={submitError}></SubmitError>
             )}
-            {responseError && <Error>{responseError?.error}</Error>}
+            {responseError && (
+              <Error>{responseError?.data?.errorMessage?.error}</Error>
+            )}
             {isLoading ? (
               <ProcessBtn label="Submitting..." />
             ) : (
