@@ -6,6 +6,7 @@ import {
   WindmillContext,
 } from "@windmill/react-ui";
 import React, { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BellIcon,
   MenuIcon,
@@ -17,7 +18,7 @@ import {
   SunIcon,
 } from "../../assets/dashboard/icons";
 import { SidebarContext } from "../../context/dashboard/SidebarContext";
-
+import { userLoggedOut } from "../../features/auth/authSlice";
 function Header() {
   const { mode, toggleMode } = useContext(WindmillContext);
   const { toggleSidebar } = useContext(SidebarContext);
@@ -32,6 +33,17 @@ function Header() {
   function handleProfileClick() {
     setIsProfileMenuOpen(!isProfileMenuOpen);
   }
+  // logout user
+  const dispatch = useDispatch();
+  const {
+    user: { image, name },
+  } = useSelector((state) => state.auth) || {};
+
+  const handleLogout = () => {
+    console.log("logout");
+    dispatch(userLoggedOut());
+    localStorage.clear();
+  };
 
   return (
     <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
@@ -117,7 +129,7 @@ function Header() {
             >
               <Avatar
                 className="align-middle"
-                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                src={image}
                 alt=""
                 aria-hidden="true"
               />
@@ -138,7 +150,7 @@ function Header() {
                 <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />
                 <span>Settings</span>
               </DropdownItem>
-              <DropdownItem onClick={() => alert("Log out!")}>
+              <DropdownItem onClick={handleLogout}>
                 <OutlineLogoutIcon
                   className="w-4 h-4 mr-3"
                   aria-hidden="true"

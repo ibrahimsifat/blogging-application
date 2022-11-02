@@ -7,11 +7,12 @@ const userModel = require("../../models/userModel");
 const nodeMiler = require("nodemailer");
 const fs = require("fs");
 
-module.exports.admin_login = async (req, res) => {
+const admin_login = async (req, res) => {
   const { email, password } = req.body;
 
   const error = {};
 
+  // handle validation error
   if (email && !validator.isEmail(email)) {
     error.email = "please provide your valid email";
   }
@@ -22,36 +23,39 @@ module.exports.admin_login = async (req, res) => {
     error.password = "please provide your password";
   }
 
+  // check if error
   if (Object.keys(error).length > 0) {
-    return res.status(400).json({ errorMessage: error });
+    return res.status(400).json({ error: error });
   } else {
     try {
       const getAdmin = await adminModel.findOne({ email }).select("+password");
       if (getAdmin) {
         const matchPassword = await bcrypt.compare(password, getAdmin.password);
         if (matchPassword) {
-          const token = jwt.sign(
-            {
-              id: getAdmin._id,
-              name: getAdmin.adminName,
-              role: getAdmin.role,
-              image: getAdmin.image,
-            },
-            process.env.SECRET,
-            { expiresIn: "7d" }
-          );
+          const { _id, name, role, image } = getAdmin || {};
+          console.log(getAdmin);
+          const userObj = {
+            id: _id,
+            name,
+            role,
+            image,
+          };
+          const token = jwt.sign(userObj, process.env.SECRET, {
+            expiresIn: "7d",
+          });
 
           res
             .status(200)
-            .cookie("blog_token", token, {
+            .cookie("binary_token", token, {
               expires: new Date(
                 Date.now() + process.env.COOKIE_EXP * 24 * 60 * 60 * 1000
               ),
               httpOnly: true,
             })
             .json({
-              successMessage: "login successful",
-              token,
+              message: "login successful",
+              user: userObj,
+              accessToken: token,
             });
         } else {
           return res
@@ -71,7 +75,7 @@ module.exports.admin_login = async (req, res) => {
   }
 };
 
-module.exports.user_register = async (req, res) => {
+const user_register = async (req, res) => {
   const formData = formidable();
 
   formData.parse(req, async (err, fields, files) => {
@@ -178,7 +182,7 @@ module.exports.user_register = async (req, res) => {
   });
 };
 
-module.exports.verify_email = async (req, res) => {
+const verify_email = async (req, res) => {
   const { otp } = req.body;
   const { emailVerifyToken } = req.cookies;
   if (!otp) {
@@ -247,7 +251,7 @@ module.exports.verify_email = async (req, res) => {
   }
 };
 
-module.exports.user_login = async (req, res) => {
+const user_login = async (req, res) => {
   const { email, password } = req.body;
 
   const error = {};
@@ -310,4 +314,11 @@ module.exports.user_login = async (req, res) => {
         .json({ errorMessage: { error: "Internal server error" } });
     }
   }
+};
+
+module.exports = {
+  admin_login,
+  user_register,
+  user_login,
+  verify_email,
 };

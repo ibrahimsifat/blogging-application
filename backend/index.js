@@ -8,7 +8,14 @@ const connectDB = require("./services/connectDB");
 connectDB();
 
 const server = http.createServer(app);
-
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 // listen the app
 server.listen(port, (err) => {
   if (err) {

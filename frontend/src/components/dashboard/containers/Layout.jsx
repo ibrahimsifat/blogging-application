@@ -2,10 +2,6 @@ import React, { lazy, Suspense, useContext, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { SidebarContext } from "../../../context/dashboard/SidebarContext";
 
-import Admins from "../../../pages/dashboard/admins";
-import AddAdmin from "../../../pages/dashboard/admins/add";
-import AdminProfile from "../../../pages/dashboard/admins/adminProfile";
-import UpdateAdmin from "../../../pages/dashboard/admins/update";
 import AddArticles from "../../../pages/dashboard/articles/AddArticles";
 import Articles from "../../../pages/dashboard/articles/Articles";
 import AddCategory from "../../../pages/dashboard/categories/add";
@@ -14,10 +10,14 @@ import UpdateCategory from "../../../pages/dashboard/categories/update";
 import Comments from "../../../pages/dashboard/Comments";
 import CreateAccount from "../../../pages/dashboard/CreateAccount";
 import ForgotPassword from "../../../pages/dashboard/ForgotPassword";
+import SubAdmins from "../../../pages/dashboard/subAdmins";
+import AddSubAdmin from "../../../pages/dashboard/subAdmins/add";
+import SubAdminProfile from "../../../pages/dashboard/subAdmins/subAdminProfile";
+import UpdateSubAdmin from "../../../pages/dashboard/subAdmins/update";
 import AddTags from "../../../pages/dashboard/tags/add";
 import Tags from "../../../pages/dashboard/tags/Tags";
 import UpdateTags from "../../../pages/dashboard/tags/update";
-import Users from "../../../pages/dashboard/users";
+import Users from "../../../pages/dashboard/Users";
 import AddUser from "../../../pages/dashboard/users/add";
 import UpdateUser from "../../../pages/dashboard/users/update";
 import Header from "../Header";
@@ -65,13 +65,16 @@ function Layout({ children }) {
               <Route path="/tag/add" element={<AddTags />} />
               <Route path="/tag/edit/:tagId" element={<UpdateTags />} />
 
-              {/* Admin routes */}
-              <Route path="/admins" element={<Admins />} />
-              <Route path="/admin/add" element={<AddAdmin />} />
-              <Route path="/admin/edit/:adminId" element={<UpdateAdmin />} />
+              {/* sub Admin routes */}
+              <Route path="/sub_admins" element={<SubAdmins />} />
+              <Route path="/sub_admin/add" element={<AddSubAdmin />} />
+              <Route
+                path="/sub_admin/edit/:adminId"
+                element={<UpdateSubAdmin />}
+              />
               <Route
                 path="/admin/profile/:adminId"
-                element={<AdminProfile />}
+                element={<SubAdminProfile />}
               />
 
               {/* Users routes */}

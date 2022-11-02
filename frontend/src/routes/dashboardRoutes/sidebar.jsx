@@ -52,16 +52,16 @@ const routes = [
 
   {
     icon: "ButtonsIcon",
-    name: "Admins",
+    name: "Sub Admins",
     routes: [
       // submenu
       {
-        path: "/dashboard/admins",
-        name: "All Admins",
+        path: "/dashboard/sub_admins",
+        name: "All Sub-Admins",
       },
       {
-        path: "/dashboard/admin/add",
-        name: "Add Admin",
+        path: "/dashboard/sub_admin/add",
+        name: "Add Sub-Admin",
       },
     ],
   },

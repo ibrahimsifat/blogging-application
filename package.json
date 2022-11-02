@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "react-dropzone": "^14.2.3",
-    "react-select": "^5.5.7"
-  }
-}

@@ -7,9 +7,9 @@ const {
   user_login,
 } = require("../../controller/auth/authController");
 
-router.post("/admin-login", admin_login);
-router.post("/user-register", user_register);
+router.post("/admin_login", admin_login);
+router.post("/user/register", user_register);
 router.post("/verify-email", verify_email);
-router.post("/user-login", user_login);
+router.post("/user/login", user_login);
 
 module.exports = router;

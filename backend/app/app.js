@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const indexRoute = require("../routes");
-
+require("dotenv").config();
 // internal imports
 
 // create app
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 const corsOptions = {
-  origin: "http://127.0.0.1:5173",
+  origin: "http://localhost:3000",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };

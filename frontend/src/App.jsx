@@ -1,11 +1,9 @@
 import React from "react";
-import Routers from "./routes";
+import useAuthCheck from "./hooks/useAuthCheck";
 
+import Routers from "./routes";
 const App = () => {
-  return (
-    <>
-      <Routers />
-    </>
-  );
+  const authChecked = useAuthCheck();
+  return !authChecked ? <div>Checking authentication....</div> : <Routers />;
 };
 export default App;
