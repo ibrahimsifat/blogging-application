@@ -11,13 +11,12 @@ const add_category = async (req, res) => {
   }
   if (Object.keys(error).length === 0) {
     const categorySlug = name.trim().split(" ").join("-");
-    console.log(name, categorySlug);
 
     try {
       const checkCategory = await CategoryModel.findOne({ categorySlug });
       if (checkCategory) {
         res.status(404).json({
-          error: "Already added category",
+          error: "This category Already added ",
         });
       } else {
         const categoryObj = {
@@ -37,13 +36,13 @@ const add_category = async (req, res) => {
       });
     }
   } else {
-    res.status(400).json({ error });
+    res.status(400).json({ error: "provide valid information" });
   }
 };
 const get_categories = async (req, res) => {
   const { page, searchValue } = req.query;
 
-  const parPage = 2;
+  const parPage = 10;
   const skipPage = parseInt(page - 1) * parPage;
   if (searchValue === "undefined" || !searchValue) {
     try {
@@ -53,7 +52,7 @@ const get_categories = async (req, res) => {
         .limit(parPage)
         .sort({ createdAt: -1 });
       res.status(200).json({
-        allCategory: getCategory,
+        categories: getCategory,
         parPage,
         categoryCount,
       });
@@ -100,10 +99,10 @@ const delete_category = async (req, res) => {
 };
 
 const get_category = async (req, res) => {
-  const { categorySlug } = req.params;
+  const { categoryId } = req.params;
 
   try {
-    const editCategory = await CategoryModel.findOne({ categorySlug });
+    const editCategory = await CategoryModel.findById(categoryId);
 
     res.status(200).json({
       editCategory,
@@ -121,7 +120,7 @@ const update_category = async (req, res) => {
   const { categoryId } = req.params;
   const { name, description } = req.body;
   const error = {};
-
+  console.log(name, description);
   if (!name) {
     error.name = "Please provide category name";
   }
@@ -143,13 +142,25 @@ const update_category = async (req, res) => {
       });
     } catch (error) {
       res.status(500).json({
-        errorMessage: {
-          error: "Internal server error",
-        },
+        error: "Internal server error",
       });
     }
   } else {
-    res.status(400).json({ errorMessage: error });
+    res.status(400).json({ error });
+  }
+};
+const status_change = async (req, res) => {
+  const { categoryId } = req.params;
+  const { status } = req.body;
+  try {
+    await CategoryModel.findByIdAndUpdate(categoryId, { status });
+    res.status(200).json({
+      successMessage: "Category update successful",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Internal server error",
+    });
   }
 };
 
@@ -158,6 +169,6 @@ module.exports = {
   add_category,
   get_category,
   delete_category,
-
+  status_change,
   update_category,
 };

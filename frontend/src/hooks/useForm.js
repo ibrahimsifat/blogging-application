@@ -105,7 +105,7 @@ const UseForm = ({ init, validate }) => {
 
 // helper function
 const mapValuesToState = (values, shouldClear = false) => {
-  return Object.keys(values).reduce((acc, key) => {
+  return Object?.keys(values)?.reduce((acc, key) => {
     acc[key] = {
       value: shouldClear ? "" : values[key],
       error: "",

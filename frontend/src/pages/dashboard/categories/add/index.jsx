@@ -1,33 +1,69 @@
 import { Button } from "@windmill/react-ui";
-import { default as React, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { default as React, useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "../../../../components/dashboard/Typography/PageTitle";
 import SubmitError from "../../../../components/shared/form/SubmitError";
+import Error from "../../../../components/shared/ui/Error";
 import { useAddCategoryMutation } from "../../../../features/category/categoriesApi";
-import AddUpdateCategoryForm from "../AddUpdateCategoryForm";
-
+import { successNotify } from "../../../../hooks/toast/Toast";
+import UseForm from "../../../../hooks/useForm";
+import AddCategoryForm from "./AddCategoryForm";
+const init = {
+  name: "",
+  description: "",
+};
+const validate = (values) => {
+  let errors = {};
+  if (!values.name) {
+    errors.name = "Name is required";
+  }
+  if (!values.description) {
+    errors.description = "Description is required";
+  }
+  return errors;
+};
 const AddCategory = () => {
   const [submitError, setSubmitError] = useState([]);
-  const [formValue, setFormValue] = useState({});
+
+  // handle form
+  const {
+    formState,
+    clear,
+    handleBlur,
+    handleChange,
+    handleFocus,
+    handleSubmit,
+  } = UseForm({ init, validate });
+
   // add category
-  const [addCategory, { error }] = useAddCategoryMutation();
-  const dispatch = useDispatch();
+  const [addCategory, { error, isSuccess }] = useAddCategoryMutation();
+  // const dispatch = useDispatch();
   const cb = ({ hasError, values, errors }) => {
     if (hasError) {
-      const obj = errors;
-      const errorArray = Object.values(obj);
+      const errorArray = Object.values(errors);
       setSubmitError(errorArray);
     } else {
-      setFormValue(values);
-
-      dispatch(addCategory(formValue));
+      setSubmitError([]);
+      addCategory({ name: values.name, description: values.description });
     }
   };
-  console.log(error);
+
+  console.log("add-category");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSuccess) {
+      successNotify("Category added successfully");
+      navigate("/dashboard/category");
+      clear();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
+
   return (
     <div>
       {/* header */}
+      <Toaster />
       <div className="flex justify-between items-center">
         <PageTitle className="">Add Category</PageTitle>
         <Link to="/dashboard/category">
@@ -35,9 +71,16 @@ const AddCategory = () => {
         </Link>
       </div>
       {/* form */}
-      <AddUpdateCategoryForm cb={cb} />
+      <AddCategoryForm
+        cb={cb}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        handleFocus={handleFocus}
+        handleSubmit={handleSubmit}
+        state={formState}
+      />
       {submitError && <SubmitError submitError={submitError}></SubmitError>}
-      {/* {error && <Error>{error?.data?.error}</Error>}   */}
+      {error && <Error>{error?.data?.error}</Error>}
     </div>
   );
 };

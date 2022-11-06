@@ -1,33 +1,16 @@
 import { Button } from "@windmill/react-ui";
 import { default as React } from "react";
-import InputGroup from "../../../components/shared/input/Input";
-import UseForm from "../../../hooks/useForm";
-import Form from "../../auth/ui/Form";
-const init = {
-  name: "",
-  description: "",
-};
-const validate = (values) => {
-  let errors = {};
-  if (!values.name) {
-    errors.name = "Name is required";
-  }
-  if (!values.description) {
-    errors.description = "Description is required";
-  }
+import InputGroup from "../../../../components/shared/input/Input";
+import Form from "../../../auth/ui/Form";
 
-  return errors;
-};
-const AddUpdateCategoryForm = ({ edit = false, cb, isLoading }) => {
-  const {
-    formState: state,
-    clear,
-    handleBlur,
-    handleChange,
-    handleFocus,
-    handleSubmit,
-  } = UseForm({ init, validate });
-
+const AddCategoryForm = ({
+  cb,
+  handleBlur,
+  handleChange,
+  handleFocus,
+  handleSubmit,
+  state,
+}) => {
   return (
     <>
       {/* form */}
@@ -55,14 +38,10 @@ const AddUpdateCategoryForm = ({ edit = false, cb, isLoading }) => {
           error={state.description.error}
         />
 
-        {edit ? (
-          <Button type="submit">Update</Button>
-        ) : (
-          <Button type="submit">Add category</Button>
-        )}
+        <Button type="submit">Add category</Button>
       </Form>
     </>
   );
 };
 
-export default AddUpdateCategoryForm;
+export default AddCategoryForm;

@@ -63,7 +63,7 @@ function Layout({ children }) {
 
               <Route path="/tags" element={<Tags />} />
               <Route path="/tag/add" element={<AddTags />} />
-              <Route path="/tag/edit/:tagId" element={<UpdateTags />} />
+              <Route path="/tag/edit/:tagSlug" element={<UpdateTags />} />
 
               {/* sub Admin routes */}
               <Route path="/sub_admins" element={<SubAdmins />} />

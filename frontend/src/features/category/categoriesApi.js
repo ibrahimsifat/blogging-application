@@ -1,10 +1,10 @@
 import { apiSlice } from "../api/apiSlice";
-import { insertCategory } from "./categoriesSlice";
+import { editCategory, insertCategory } from "./categoriesSlice";
 
 export const categoriesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategories: builder.query({
-      query: () => `/category/get`,
+      query: (page) => `/category/get?page=${page}`,
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
@@ -13,6 +13,7 @@ export const categoriesApi = apiSlice.injectEndpoints({
           // do nothing
         }
       },
+      providesTags: ["Category"],
     }),
     addCategory: builder.mutation({
       query: (data) => ({
@@ -20,27 +21,51 @@ export const categoriesApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Category"],
     }),
     getCategory: builder.query({
-      query: (slug) => ({
-        url: `/category/get/${slug}`,
+      query: (id) => ({
+        url: `/category/edit/${id}`,
         method: "GET",
       }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          dispatch(editCategory(result.data.editCategory));
+        } catch (err) {
+          // do nothing
+        }
+      },
     }),
 
     updateCategory: builder.mutation({
-      query: ({ slug, data }) => ({
-        url: `/category/${slug}`,
-        method: "PATCH",
-        data,
-      }),
+      query: ({ id, data }) => {
+        return {
+          url: `/category/update/${id}`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Category"],
+    }),
+    updateCategoryStatus: builder.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/category/update/status/${id}`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Category"],
     }),
 
     deleteCategory: builder.mutation({
       query: (id) => ({
-        url: `/category/${id}`,
+        url: `/category/delete/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Category"],
     }),
   }),
 });
@@ -51,4 +76,5 @@ export const {
   useGetCategoriesQuery,
   useGetCategoryQuery,
   useUpdateCategoryMutation,
+  useUpdateCategoryStatusMutation,
 } = categoriesApi;

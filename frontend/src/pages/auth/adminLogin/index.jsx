@@ -1,5 +1,6 @@
 import { Button } from "@windmill/react-ui";
 import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import SubmitError from "../../../components/shared/form/SubmitError";
 import InputGroup from "../../../components/shared/input/Input";
@@ -25,15 +26,13 @@ const validate = (values) => {
   return errors;
 };
 const AdminLogin = () => {
-  const [disableSubmit, setDisableSubmit] = useState(true);
-  const [fromData, setFromDate] = useState({});
   const [error, setError] = useState("");
   const [submitError, setSubmitError] = useState([]);
   const navigate = useNavigate();
   // login
   const [adminLogin, { data, isLoading, error: responseError }] =
     useAdminLoginMutation({});
-
+  const loginNotify = () => toast.success("Here is your toast.");
   useEffect(() => {
     if (responseError?.data) {
       setError(responseError.data);
@@ -62,15 +61,14 @@ const AdminLogin = () => {
       const errorArray = Object.values(errors);
       setSubmitError(errorArray);
     } else {
-      console.log("[success]" + JSON.stringify(values));
-      setFromDate(values);
       setError("");
-      console.log("responseError");
       adminLogin({ email: values.email, password: values.password });
+      loginNotify();
     }
   };
   return (
     <AuthLayout>
+      <Toaster />
       <div className="max-w-md mx-auto mb-10 md:w-96">
         <AuthFormHeading label="Admin Login" />
         <div className="divide-y divide-gray-200">
@@ -100,9 +98,7 @@ const AdminLogin = () => {
             {submitError && (
               <SubmitError submitError={submitError}></SubmitError>
             )}
-            {responseError && (
-              <Error>{responseError?.data?.errorMessage?.error}</Error>
-            )}
+            {error && <Error>{responseError?.data?.errorMessage?.error}</Error>}
             {isLoading ? (
               <ProcessBtn label="Submitting..." />
             ) : (

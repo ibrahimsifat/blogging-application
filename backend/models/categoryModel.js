@@ -10,6 +10,11 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["pending", "published"],
+      default: "pending",
+    },
     description: {
       type: String,
       required: true,
