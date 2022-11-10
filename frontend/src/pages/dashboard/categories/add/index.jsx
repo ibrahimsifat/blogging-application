@@ -6,8 +6,8 @@ import PageTitle from "../../../../components/dashboard/Typography/PageTitle";
 import SubmitError from "../../../../components/shared/form/SubmitError";
 import Error from "../../../../components/shared/ui/Error";
 import { useAddCategoryMutation } from "../../../../features/category/categoriesApi";
+import UseAddForm from "../../../../hooks/addForm/useAddForm";
 import UseForm from "../../../../hooks/useForm";
-import AddCategoryForm from "./AddCategoryForm";
 const init = {
   name: "",
   description: "",
@@ -74,13 +74,14 @@ const AddCategory = () => {
         </Link>
       </div>
       {/* form */}
-      <AddCategoryForm
+      <UseAddForm
         cb={cb}
         handleBlur={handleBlur}
         handleChange={handleChange}
         handleFocus={handleFocus}
         handleSubmit={handleSubmit}
         state={formState}
+        btnString="Add category"
       />
       {submitError && <SubmitError submitError={submitError}></SubmitError>}
       {error && <Error>{error?.data?.error}</Error>}

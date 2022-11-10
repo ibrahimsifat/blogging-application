@@ -26,6 +26,7 @@ import {
 } from "../../../features/category/categoriesApi";
 import { search } from "../../../features/category/categoriesSlice";
 import { selectCategorySearchString } from "../../../features/category/categorySelector";
+import DeleteModal from "../../../hooks/deleteModal";
 import UseFilter from "../../../hooks/filters/useFilter";
 import StatusSwitcher from "../../../hooks/StatusSwitcher";
 import {
@@ -33,7 +34,6 @@ import {
   categoryFilters,
 } from "../../../utils/data/dashboard/categories";
 import debounce from "../../../utils/debounce";
-import DeleteModal from "./delete";
 
 // import response from "../../../utils/demo/tableData";
 
@@ -44,10 +44,6 @@ function Categories() {
   // fetch category
   const { data, isLoading, isError, error } = useGetCategoriesQuery(pageTable);
 
-  const [isOpen, setIsOpen] = useState(false);
-  function toggleDropdown() {
-    setIsOpen(!isOpen);
-  }
   useEffect(() => {
     setCategories(data?.categories);
   }, [data]);
@@ -221,7 +217,7 @@ function Categories() {
           </TableCell>
 
           <TableCell>
-            <StatusSwitcher handleStatus={handleStatus} category={category} />
+            <StatusSwitcher handleStatus={handleStatus} data={category} />
           </TableCell>
           <TableCell>
             <Link to={`/dashboard/category/edit/${category?._id}`}>
@@ -260,16 +256,17 @@ function Categories() {
       </div>
       <div className="flex justify-center items-center">
         {/* bulk operation */}
-        <WindSelect
-          id="Actions"
-          name="category"
-          placeholder="Bulk Actions"
-          options={CategoryAction}
-          className="my-react-select-container"
-          classNamePrefix="my-react-select"
-          onChange={(data) => handleBulkActions(data.value)}
-        />
-
+        {isCheck?.length > 0 && (
+          <WindSelect
+            id="Actions"
+            name="category"
+            placeholder="Bulk Actions"
+            options={CategoryAction}
+            className="my-react-select-container"
+            classNamePrefix="my-react-select"
+            onChange={(data) => handleBulkActions(data.value)}
+          />
+        )}
         {/* search input */}
         <DarkInput
           type="text"

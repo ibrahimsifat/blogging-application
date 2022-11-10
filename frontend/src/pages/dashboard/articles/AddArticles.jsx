@@ -9,10 +9,11 @@ import InputGroup, { InputLabel } from "../../../components/shared/input/Input";
 import ProcessBtn from "../../../components/shared/ui/Button/ProcessBtn";
 import { useGetCategoriesQuery } from "../../../features/category/categoriesApi";
 import { selectPublishedCategory } from "../../../features/category/categorySelector";
+import DeleteModal from "../../../hooks/deleteModal";
 import UseForm from "../../../hooks/useForm";
 import arrayFromSelectValues from "../../../utils/arrayFromSelectValues";
 import Form from "../../auth/ui/Form";
-import ModalPage from "../categories/delete";
+
 import { selectTags } from "./data";
 import UseUpload from "./UseUpload";
 const init = {
@@ -91,7 +92,7 @@ const AddArticles = () => {
 
   return (
     <>
-      <ModalPage />
+      <DeleteModal />
       <PageTitle className="">Add new Articles</PageTitle>
       <div className="bg-white md:p-10 p-4">
         <Form onSubmit={(e) => handleSubmit(e, cb)}>

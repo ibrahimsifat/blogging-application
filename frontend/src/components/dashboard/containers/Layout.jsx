@@ -16,7 +16,7 @@ import SubAdminProfile from "../../../pages/dashboard/subAdmins/subAdminProfile"
 import UpdateSubAdmin from "../../../pages/dashboard/subAdmins/update";
 import AddTags from "../../../pages/dashboard/tags/add";
 import Tags from "../../../pages/dashboard/tags/Tags";
-import UpdateTags from "../../../pages/dashboard/tags/update";
+import UpdateTag from "../../../pages/dashboard/tags/update";
 import Users from "../../../pages/dashboard/Users";
 import AddUser from "../../../pages/dashboard/users/add";
 import UpdateUser from "../../../pages/dashboard/users/update";
@@ -63,7 +63,7 @@ function Layout({ children }) {
 
               <Route path="/tags" element={<Tags />} />
               <Route path="/tag/add" element={<AddTags />} />
-              <Route path="/tag/edit/:tagSlug" element={<UpdateTags />} />
+              <Route path="/tag/edit/:categoryId" element={<UpdateTag />} />
 
               {/* sub Admin routes */}
               <Route path="/sub_admins" element={<SubAdmins />} />

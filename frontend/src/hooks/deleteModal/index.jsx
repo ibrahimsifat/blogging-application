@@ -1,6 +1,6 @@
 import { Button } from "@windmill/react-ui";
 import React from "react";
-import Modal from "../../../../hooks/modal/Modal";
+import Modal from "../modal/Modal";
 
 const DeleteModal = ({ opened, controlModal, handleDelete }) => {
   return (

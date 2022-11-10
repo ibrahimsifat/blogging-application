@@ -3,7 +3,7 @@ import { default as React } from "react";
 import InputGroup from "../../../../components/shared/input/Input";
 import Form from "../../../auth/ui/Form";
 
-const AddCategoryForm = ({
+const AddTagForm = ({
   cb,
   handleBlur,
   handleChange,
@@ -38,10 +38,10 @@ const AddCategoryForm = ({
           error={state.description.error}
         />
 
-        <Button type="submit">Add category</Button>
+        <Button type="submit">Add tag==</Button>
       </Form>
     </>
   );
 };
 
-export default AddCategoryForm;
+export default AddTagForm;
