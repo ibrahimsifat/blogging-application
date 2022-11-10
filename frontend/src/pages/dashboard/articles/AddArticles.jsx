@@ -1,15 +1,19 @@
 import { Button } from "@windmill/react-ui";
 import JoditEditor from "jodit-react";
 import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import PageTitle from "../../../components/dashboard/Typography/PageTitle";
 import InputGroup, { InputLabel } from "../../../components/shared/input/Input";
 import ProcessBtn from "../../../components/shared/ui/Button/ProcessBtn";
+import { useGetCategoriesQuery } from "../../../features/category/categoriesApi";
+import { selectPublishedCategory } from "../../../features/category/categorySelector";
 import UseForm from "../../../hooks/useForm";
+import arrayFromSelectValues from "../../../utils/arrayFromSelectValues";
 import Form from "../../auth/ui/Form";
 import ModalPage from "../categories/delete";
-import { selectCategory, selectTags } from "./data";
+import { selectTags } from "./data";
 import UseUpload from "./UseUpload";
 const init = {
   title: "",
@@ -65,7 +69,13 @@ const AddArticles = () => {
   // select
   const [category, setCategory] = useState([]);
   const [tags, setTags] = useState([]);
-  console.log(category);
+
+  // fetch category
+  useGetCategoriesQuery();
+  // category from return select/option value
+  const publishedCategories = useSelector(selectPublishedCategory);
+  const selectCategories = arrayFromSelectValues(publishedCategories);
+
   const handleCategorySelect = (newValue) => {
     const reduceValue = newValue?.map((value) => value?.value);
     setCategory([...reduceValue]);
@@ -116,7 +126,7 @@ const AddArticles = () => {
               isMulti
               id="selectCategory"
               name="category"
-              options={selectCategory}
+              options={selectCategories}
               className="basic-multi-select"
               classNamePrefix="select category"
               onChange={handleCategorySelect}

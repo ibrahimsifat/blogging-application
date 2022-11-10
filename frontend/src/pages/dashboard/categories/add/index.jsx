@@ -6,7 +6,6 @@ import PageTitle from "../../../../components/dashboard/Typography/PageTitle";
 import SubmitError from "../../../../components/shared/form/SubmitError";
 import Error from "../../../../components/shared/ui/Error";
 import { useAddCategoryMutation } from "../../../../features/category/categoriesApi";
-import { successNotify } from "../../../../hooks/toast/Toast";
 import UseForm from "../../../../hooks/useForm";
 import AddCategoryForm from "./AddCategoryForm";
 const init = {
@@ -45,7 +44,11 @@ const AddCategory = () => {
       setSubmitError(errorArray);
     } else {
       setSubmitError([]);
-      addCategory({ name: values.name, description: values.description });
+      const { name, description } = values;
+      addCategory({
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        description,
+      });
     }
   };
 
@@ -53,7 +56,7 @@ const AddCategory = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isSuccess) {
-      successNotify("Category added successfully");
+      // successNotify("Category added successfully");
       navigate("/dashboard/category");
       clear();
     }

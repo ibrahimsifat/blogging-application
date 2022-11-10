@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { editCategory, insertCategory } from "./categoriesSlice";
+import { editCategory, publishedCategories } from "./categoriesSlice";
 
 export const categoriesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +8,13 @@ export const categoriesApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          dispatch(insertCategory(result.data));
+          dispatch(
+            publishedCategories(
+              result.data?.categories?.filter(
+                (category) => category.status === "published"
+              )
+            )
+          );
         } catch (err) {
           // do nothing
         }

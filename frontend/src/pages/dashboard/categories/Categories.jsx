@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import {
   Button,
   Input,
@@ -12,6 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@windmill/react-ui";
+import React, { useEffect, useState } from "react";
+import WindSelect from "react-select";
 import { EditIcon, TrashIcon } from "../../../assets/dashboard/icons";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -26,21 +26,32 @@ import {
 } from "../../../features/category/categoriesApi";
 import { search } from "../../../features/category/categoriesSlice";
 import { selectCategorySearchString } from "../../../features/category/categorySelector";
-import Modal from "../../../hooks/modal/Modal";
+import UseFilter from "../../../hooks/filters/useFilter";
 import StatusSwitcher from "../../../hooks/StatusSwitcher";
-import { successNotify } from "../../../hooks/toast/Toast";
+import {
+  CategoryAction,
+  categoryFilters,
+} from "../../../utils/data/dashboard/categories";
 import debounce from "../../../utils/debounce";
+import DeleteModal from "./delete";
+
 // import response from "../../../utils/demo/tableData";
 
 function Categories() {
   const [pageTable, setPageTable] = useState(1);
+  const [categories, setCategories] = useState([]);
 
   // fetch category
   const { data, isLoading, isError, error } = useGetCategoriesQuery(pageTable);
 
-  const categories = data?.categories;
-  console.log(data);
-
+  const [isOpen, setIsOpen] = useState(false);
+  function toggleDropdown() {
+    setIsOpen(!isOpen);
+  }
+  useEffect(() => {
+    setCategories(data?.categories);
+  }, [data]);
+  categories && console.log(categories);
   // pagination setup
   const resultsPerPage = 10;
   const totalResults = data?.categoryCount;
@@ -62,7 +73,8 @@ function Categories() {
   const [deleteCategory] = useDeleteCategoryMutation();
   const handleDelete = () => {
     deleteCategory(categoryId);
-    successNotify("Category Deleted successfully");
+    setOpened((prevState) => !prevState);
+    // successNotify("Category Deleted successfully");
   };
 
   // handle status publish and pending
@@ -86,13 +98,81 @@ function Categories() {
     }
   };
 
+  // select all
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
+
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(categories?.map((category) => category._id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+
+  const handleClick = (e, _id) => {
+    const { checked } = e.target;
+    if (checked) setIsCheck([...isCheck, _id]);
+    else setIsCheck(isCheck.filter((id) => id !== _id));
+  };
+
   // filter Search
   const dispatch = useDispatch();
   const handleSearch = (e) => {
-    dispatch(search(e.target.value));
+    const searchString = e.target.value.toLowerCase();
+    dispatch(search(searchString));
     console.log(e.target.value);
   };
   const searchString = useSelector(selectCategorySearchString);
+
+  // handle categories filters operations
+
+  const handleFilters = (value) => {
+    const filteredCategory = UseFilter(categories, value);
+    if (filteredCategory && filteredCategory.length > 0) {
+      setCategories(filteredCategory);
+    }
+  };
+  // handle bulk operations
+  const handleBulkActions = (value) => {
+    // const value = e.target.value;
+    if (value && isCheck.length > 0) {
+      console.log("handle", isCheck);
+
+      if (value === "publish") {
+        isCheck?.forEach((id) => {
+          updateCategoryStatus({
+            id,
+            data: {
+              status: "published",
+            },
+          });
+        });
+        // unchecked after operation
+        setIsCheck([]);
+      }
+      if (value === "pending") {
+        isCheck?.forEach((id) => {
+          updateCategoryStatus({
+            id,
+            data: {
+              status: "pending",
+            },
+          });
+        });
+        // unchecked after operation
+        setIsCheck([]);
+      }
+      if (value === "delete") {
+        console.log("delete");
+        isCheck?.forEach((id) => {
+          deleteCategory(id);
+        });
+        // unchecked after operation
+        setIsCheck([]);
+      }
+    }
+  };
 
   // decide what to render
   let content = null;
@@ -118,13 +198,18 @@ function Categories() {
     );
   } else if (!isLoading && !isError && categories?.length > 0) {
     content = categories
-      ?.filter((category) => category?.name.includes(searchString))
+      ?.filter((category) =>
+        category?.name?.toLowerCase().includes(searchString)
+      )
       ?.map((category, i) => (
         <TableRow key={i}>
           <TableCell>
             <Input
               type="checkbox"
-              className="h-6 w-6 transition duration-500 cursor-pointer focus:outline-none"
+              name={category.name}
+              onChange={(e) => handleClick(e, category?._id)}
+              checked={isCheck?.includes(category._id)}
+              className="h-5 w-5 transition duration-500 cursor-pointer focus:outline-none bg-transparent"
             />
           </TableCell>
           <TableCell>
@@ -158,45 +243,64 @@ function Categories() {
         </TableRow>
       ));
   }
+
   return (
     <>
       {/* delete modal */}
-      <Modal open={opened} control={controlModal}>
-        <div className="flex justify-center items-center">
-          <div>
-            <h1 className="font-bold md:text-2xl text-xl">
-              Are you Want To Delete Category{" "}
-            </h1>
-            <div className="flex justify-end items-start mt-10 space-x-4">
-              <Button layout="outline" onClick={controlModal}>
-                Cancel
-              </Button>
-              <Button onClick={handleDelete}>Delete</Button>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      <DeleteModal
+        opened={opened}
+        controlModal={controlModal}
+        handleDelete={handleDelete}
+      />
       <div className="flex justify-between items-center">
         <PageTitle className="">All Categories</PageTitle>
         <Link to="/dashboard/category/add">
           <Button>Add Category</Button>
         </Link>
       </div>
+      <div className="flex justify-center items-center">
+        {/* bulk operation */}
+        <WindSelect
+          id="Actions"
+          name="category"
+          placeholder="Bulk Actions"
+          options={CategoryAction}
+          className="my-react-select-container"
+          classNamePrefix="my-react-select"
+          onChange={(data) => handleBulkActions(data.value)}
+        />
 
+        {/* search input */}
+        <DarkInput
+          type="text"
+          placeholder="Search Categories"
+          onChange={debounce(handleSearch, 400)}
+        />
+        <WindSelect
+          id="Actions"
+          name="category"
+          placeholder="Category Filters"
+          options={categoryFilters}
+          className="my-react-select-container"
+          classNamePrefix="my-react-select"
+          onChange={(data) => handleFilters(data.value)}
+        />
+      </div>
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
             <tr>
-              <TableCell>Select</TableCell>
-              <TableCell className="flex items-center ">
-                <span className="md:mr-5 mr-3">Name</span>
-                {/* search input */}
-                <DarkInput
-                  type="text"
-                  placeholder="Search Categories"
-                  onChange={debounce(handleSearch, 400)}
+              <TableCell>
+                <Input
+                  className="h-5 w-5 transition duration-500 cursor-pointer focus:outline-none bg-transparent"
+                  type="checkbox"
+                  name="selectAll"
+                  id="selectAll"
+                  onChange={handleSelectAll}
+                  checked={isCheckAll}
                 />
               </TableCell>
+              <TableCell>Name</TableCell>
 
               <TableCell>Status</TableCell>
               <TableCell>Edit</TableCell>

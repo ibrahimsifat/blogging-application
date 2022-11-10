@@ -1,34 +1,25 @@
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "@windmill/react-ui";
+import { Button } from "@windmill/react-ui";
 import React from "react";
-function ModalPage({ isModalOpen, setIsModalOpen }) {
-  function closeModal() {
-    setIsModalOpen(false);
-  }
+import Modal from "../../../../hooks/modal/Modal";
+
+const DeleteModal = ({ opened, controlModal, handleDelete }) => {
   return (
-    <>
+    <Modal open={opened} control={controlModal}>
       <div className="flex justify-center items-center">
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <ModalHeader>Modal header</ModalHeader>
-          <ModalBody>modlekjr</ModalBody>
-          <ModalFooter>
-            <Button
-              className="w-full sm:w-auto"
-              layout="outline"
-              onClick={closeModal}
-            >
+        <div>
+          <h1 className="font-bold md:text-2xl text-xl">
+            Are you Want To Delete Category{" "}
+          </h1>
+          <div className="flex justify-end items-start mt-10 space-x-4">
+            <Button layout="outline" onClick={controlModal}>
               Cancel
             </Button>
-            <Button className="w-full sm:w-auto">Accept</Button>
-          </ModalFooter>
-        </Modal>
+            <Button onClick={handleDelete}>Delete</Button>
+          </div>
+        </div>
       </div>
-    </>
+    </Modal>
   );
-}
-export default ModalPage;
+};
+
+export default DeleteModal;
