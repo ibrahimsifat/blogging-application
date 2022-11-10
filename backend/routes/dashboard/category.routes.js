@@ -10,7 +10,7 @@ const {
 const { checkAdmin, adminAuth } = require("../../middlewares/authCheck");
 
 const router = require("express").Router();
-router.post("/add", add_category);
+router.post("/add", adminAuth, add_category);
 router.get("/get", adminAuth, get_categories);
 router.delete("/delete/:categoryId", adminAuth, delete_category);
 router.get("/edit/:categoryId", adminAuth, get_category);
