@@ -2,7 +2,8 @@ import React from "react";
 import tw from "tailwind-styled-components";
 
 // input
-const Input = tw.input`w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 focus:border-indigo-300`;
+export const Input = tw.input`w-full px-3 py-2 placeholder-gray-300  rounded-md focus:outline-none focus:ring focus:ring-blue-200 focus:border-gray-600 dark:bg-gray-800 dark:text-gray-100`;
+export const ErrorInput = tw.input`w-full px-3 py-2 placeholder-red-300 border-2 border-red-500 rounded-md focus:outline-none focus:ring focus:ring-blue-200 focus:border-gray-400 dark:bg-gray-800 dark:text-gray-100`;
 
 // label
 export const InputLabel = tw.label`block mb-2 text-sm text-gray-400`;

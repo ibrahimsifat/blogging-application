@@ -15,9 +15,9 @@ const baseStyle = {
   padding: "20px",
   borderWidth: 2,
   borderRadius: 2,
-  borderColor: "#eeeeee",
+  borderColor: "#343e4d",
   borderStyle: "dashed",
-  backgroundColor: "#fafafa",
+  backgroundColor: "#1F2937",
   color: "#bdbdbd",
   outline: "none",
   transition: "border .24s ease-in-out",
@@ -46,7 +46,7 @@ function UseUpload({ selectImage, setSelectImage }) {
       "image/png": [],
     },
   });
-
+  fileRejections && console.log(fileRejections);
   const style = useMemo(
     () => ({
       ...baseStyle,
@@ -59,7 +59,7 @@ function UseUpload({ selectImage, setSelectImage }) {
   // image upload
 
   const [photoLoading, setPhotoLoading] = useState(false);
-  console.log(selectImage);
+
   const uploadImage = () => {
     setPhotoLoading(true);
     const formData = new FormData();
@@ -74,7 +74,7 @@ function UseUpload({ selectImage, setSelectImage }) {
     });
   };
   return (
-    <div className="flex ">
+    <div className=" ">
       <div {...getRootProps({ style })}>
         <div class="flex flex-col justify-center text-center">
           {!selectImage ? (
@@ -108,18 +108,22 @@ function UseUpload({ selectImage, setSelectImage }) {
               <img
                 src={selectImage}
                 className="md:w-80 h-auto w-32 "
-                alt="image"
+                alt="im"
               />
             )
           )}
           <input type="file" class="hidden" {...getInputProps()} />
         </div>
       </div>
-      <div className="col-span-1">
+      <div>
         {photoLoading ? (
           <ProcessBtn>Uploading</ProcessBtn>
         ) : (
-          !selectImage && <Button onClick={uploadImage}>Upload</Button>
+          !selectImage && (
+            <Button layout="link" block onClick={uploadImage}>
+              Upload
+            </Button>
+          )
         )}
       </div>
     </div>
