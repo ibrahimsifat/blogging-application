@@ -23,4 +23,4 @@ const CategorySchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("Category", CategorySchema);
+module.exports = model("category", CategorySchema);

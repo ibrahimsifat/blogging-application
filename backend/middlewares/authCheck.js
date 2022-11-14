@@ -13,7 +13,7 @@ const jwt = require("jsonwebtoken");
 //     next();
 //   }
 // };
-module.exports.adminAuth = (req, res, next) => {
+module.exports.adminAuth = async (req, res, next) => {
   //   const token = req.cookies.t;
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -26,6 +26,9 @@ module.exports.adminAuth = (req, res, next) => {
         if (decodedToken.role !== "admin") {
           return res.status(401).json({ message: "Not authorized" });
         } else {
+          req.adminId = decodedToken.id;
+          req.adminName = decodedToken.name;
+          req.role = decodedToken.role;
           next();
         }
       }

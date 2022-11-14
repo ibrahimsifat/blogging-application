@@ -24,7 +24,7 @@ const adminSchema = new Schema(
       required: true,
     },
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 module.exports = model("admin", adminSchema);

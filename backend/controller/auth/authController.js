@@ -1,5 +1,5 @@
 const validator = require("validator");
-const adminModel = require("../../models/adminModel");
+const { Admin: adminModel } = require("../../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const formidable = require("formidable");

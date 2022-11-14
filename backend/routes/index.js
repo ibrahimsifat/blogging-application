@@ -1,6 +1,7 @@
 const authRouter = require("./auth/auth.routes");
 const categoryRouter = require("./dashboard/category.routes");
 const tagRouter = require("./dashboard/tags.routes");
+const articleRouter = require("./dashboard/articles.routes");
 const indexRoute = require("express").Router();
 indexRoute.get("/", (req, res) => {
   res.status(200).send("Application is running");
@@ -14,5 +15,6 @@ indexRoute.get("/health", (req, res) => {
 indexRoute.use("/auth", authRouter);
 indexRoute.use("/category", categoryRouter);
 indexRoute.use("/tag", tagRouter);
+indexRoute.use("/article", articleRouter);
 
 module.exports = indexRoute;
