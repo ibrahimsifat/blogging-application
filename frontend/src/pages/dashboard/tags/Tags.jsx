@@ -121,7 +121,7 @@ function Tags() {
   // handle tags filters operations
 
   const handleFilters = (value) => {
-    const filteredTags = UseFilter(tags, value);
+    const filteredTags = UseFilter(tags, value, "name");
     if (filteredTags && filteredTags.length > 0) {
       setTags(filteredTags);
     }

@@ -41,44 +41,26 @@ const add_category = async (req, res) => {
   }
 };
 const get_categories = async (req, res) => {
-  const { page, searchValue } = req.query;
+  const { page } = req.query;
 
   const parPage = 10;
   const skipPage = parseInt(page - 1) * parPage;
-  if (searchValue === "undefined" || !searchValue) {
-    try {
-      const categoryCount = await CategoryModel.find({}).countDocuments();
-      const getCategory = await CategoryModel.find({})
-        .skip(skipPage)
-        .limit(parPage)
-        .sort({ createdAt: -1 });
-      res.status(200).json({
-        categories: getCategory,
-        parPage,
-        categoryCount,
-      });
-    } catch (error) {
-      res.status(500).json({
-        error: "Internal server error",
-      });
-    }
-  } else {
-    try {
-      const categoryCount = await CategoryModel.find({}).countDocuments();
-      let getCategory = await CategoryModel.find({});
-      getCategory = getCategory.filter(
-        (c) => c.name.toUpperCase().indexOf(searchValue.toUpperCase()) > -1
-      );
-      res.status(200).json({
-        allCategory: getCategory,
-        parPage,
-        categoryCount,
-      });
-    } catch (error) {
-      res.status(500).json({
-        error: "Internal server error",
-      });
-    }
+
+  try {
+    const categoryCount = await CategoryModel.find({}).countDocuments();
+    const getCategory = await CategoryModel.find({})
+      .skip(skipPage)
+      .limit(parPage)
+      .sort({ createdAt: -1 });
+    res.status(200).json({
+      categories: getCategory,
+      parPage,
+      categoryCount,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Internal server error",
+    });
   }
 };
 

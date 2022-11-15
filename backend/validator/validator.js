@@ -1,5 +1,5 @@
 module.exports.article_validator = (data) => {
-  const { title, category, tag, text, image, description } = data;
+  const { title, category, tag, text, image } = data;
   let error = {};
 
   if (!title) {
@@ -16,9 +16,6 @@ module.exports.article_validator = (data) => {
   }
   if (!image) {
     error.image = "Please provide article image";
-  }
-  if (!description) {
-    error.description = "Please provide article description";
   }
 
   if (Object.keys(error).length === 0) {

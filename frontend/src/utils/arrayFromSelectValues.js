@@ -1,4 +1,6 @@
-const arrayFromSelectValues = (array) => {
-  return array.map((item) => ({ value: item.name, label: item.name }));
+export const arrayFromSelectValues = (array) => {
+  return array?.map((item) => ({ value: item.name, label: item.name }));
 };
-export default arrayFromSelectValues;
+export const arrayFromValues = (array) => {
+  return array?.map((item) => ({ value: item, label: item }));
+};

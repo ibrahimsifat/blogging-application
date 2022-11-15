@@ -52,7 +52,6 @@ const AddCategory = () => {
     }
   };
 
-  console.log("add-category");
   const navigate = useNavigate();
   useEffect(() => {
     if (isSuccess) {

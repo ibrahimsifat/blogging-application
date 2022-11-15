@@ -1,15 +1,23 @@
-const useFilter = (array, filterString) => {
+const useFilter = (array, filterString, filterProperty) => {
   if (filterString && array?.length > 0) {
     const filterCategoriesString = JSON.stringify(array);
     const categories = JSON.parse(filterCategoriesString);
     switch (filterString) {
       case "atoz":
         return categories.sort((a, b) =>
-          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+          a[filterProperty] > b[filterProperty]
+            ? 1
+            : b[filterProperty] > a[filterProperty]
+            ? -1
+            : 0
         );
       case "ztoa":
         return categories.sort((a, b) =>
-          a.name < b.name ? 1 : b.name < a.name ? -1 : 0
+          a[filterProperty] < b[filterProperty]
+            ? 1
+            : b[filterProperty] < a[filterProperty]
+            ? -1
+            : 0
         );
       case "recent":
         return categories.sort(

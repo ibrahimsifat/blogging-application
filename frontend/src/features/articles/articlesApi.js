@@ -45,9 +45,9 @@ export const articlesApi = apiSlice.injectEndpoints({
     }),
 
     updateArticle: builder.mutation({
-      query: ({ id, data }) => {
+      query: (data) => {
         return {
-          url: `/article/update/${id}`,
+          url: `/article/update`,
           method: "PATCH",
           body: data,
         };
@@ -82,4 +82,5 @@ export const {
   useGetArticlesQuery,
   useLazyGetArticleQuery,
   useUpdateArticleMutation,
+  useUpdateArticleStatusMutation,
 } = articlesApi;

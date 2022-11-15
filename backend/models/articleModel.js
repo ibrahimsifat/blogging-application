@@ -14,16 +14,21 @@ const articleSchema = new Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["pending", "published"],
+      default: "pending",
+    },
     slug: {
       type: String,
       required: true,
     },
     category: {
-      type: String,
+      type: Array,
       required: true,
     },
     tag: {
-      type: String,
+      type: Array,
       required: true,
     },
     category_slug: {

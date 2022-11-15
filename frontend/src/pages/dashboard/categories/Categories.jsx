@@ -124,7 +124,7 @@ function Categories() {
   // handle categories filters operations
 
   const handleFilters = (value) => {
-    const filteredCategory = UseFilter(categories, value);
+    const filteredCategory = UseFilter(categories, value, "name");
     if (filteredCategory && filteredCategory.length > 0) {
       setCategories(filteredCategory);
     }

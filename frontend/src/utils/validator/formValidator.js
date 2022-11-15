@@ -32,8 +32,9 @@ export const tagInitialValue = {
 // article
 export const articleValidate = ({
   title,
-  categories,
-  tags,
+  text,
+  category,
+  tag,
   image,
   description,
 }) => {
@@ -41,17 +42,17 @@ export const articleValidate = ({
   if (!title) {
     errors.title = "Title is required";
   }
-  if (categories?.length <= 0) {
-    errors.categories = "Category is required";
+  if (!category) {
+    errors.category = "Category is required";
   }
-  if (tags?.length <= 0) {
-    errors.tags = "Tag is required";
+  if (!tag) {
+    errors.tag = "Tag is required";
   }
   if (!image) {
     errors.image = "Image is required";
   }
-  if (!description) {
-    errors.description = "Description is required";
+  if (!text) {
+    errors.text = "text is required";
   }
   return errors;
 };

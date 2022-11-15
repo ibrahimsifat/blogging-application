@@ -20,14 +20,16 @@ const get_tag_category = async (req, res) => {
 const add_article = async (req, res) => {
   const { adminId, adminName } = req;
 
-  const { title, category, tag, text, image, description } = req.body;
+  const { title, category, tag, text, image } = req.body;
   const validate = article_validator(req.body);
   // check is existArticle
   existArticle = await articleModel.findOne({ title });
   if (!existArticle) {
     if (validate.validated) {
-      const categoryName = category.split("-").join(" ");
-      const tagName = tag.split("-").join(" ");
+      // const categoryName = category.split("-").join(" ");
+      // const tagName = tag.split("-").join(" ");
+      const category_slug = category.join("-");
+      const tag_slug = tag.join("-");
       const slug = title.split(" ").join("-");
       try {
         await articleModel.create({
@@ -35,13 +37,12 @@ const add_article = async (req, res) => {
           adminName,
           title,
           slug,
-          category: categoryName,
-          category_slug: category,
-          tag: tagName,
-          tag_slug: tag,
+          category,
+          category_slug,
+          tag,
+          tag_slug,
           articleText: text,
           image,
-          description,
         });
         res.status(201).json({
           successMessage: "Article add successful",
@@ -64,7 +65,7 @@ const get_article = async (req, res) => {
   const { role, adminId } = req;
   const { currentPage, searchValue } = req.query;
 
-  const parPage = 2;
+  const parPage = 10;
 
   const skipPage = parseInt(currentPage - 1) * parPage;
 
@@ -114,7 +115,7 @@ const get_article = async (req, res) => {
     }
 
     res.status(200).json({
-      allArticle: articles,
+      articles,
       parPage,
       articleCount,
     });
@@ -128,11 +129,11 @@ const get_article = async (req, res) => {
 };
 
 const edit_article = async (req, res) => {
-  const { articleSlug } = req.params;
+  const { articleId } = req.params;
   const { adminId, role } = req;
 
   try {
-    const getArticle = await articleModel.findOne({ slug: articleSlug });
+    const getArticle = await articleModel.findById(articleId);
     if (
       (getArticle && getArticle.adminId === adminId) ||
       getArticle.role === role
@@ -152,26 +153,26 @@ const edit_article = async (req, res) => {
 const update_article = async (req, res) => {
   const { title, category, tag, text, articleId } = req.body;
   const { adminId, role } = req;
-  const validate = article_validator(req.body, "");
-
+  const validate = article_validator(req.body);
   if (validate.validated) {
     try {
       const getArticle = await articleModel.findById(articleId);
+      console.log(articleId);
 
       if (
         (getArticle && getArticle.adminId === adminId) ||
         getArticle.role === role
       ) {
-        const categoryName = category.split("-").join(" ");
-        const tagName = tag.split("-").join(" ");
+        const category_slug = category.join("-");
+        const tag_slug = tag.join("-");
         const slug = title.split(" ").join("-");
         await articleModel.findByIdAndUpdate(articleId, {
           title: title.trim(),
           slug: slug.trim(),
-          category: categoryName,
-          category_slug: category,
-          tag: tagName,
-          tag_slug: tag,
+          category,
+          category_slug: category_slug,
+          tag,
+          tag_slug: tag_slug,
           articleText: text,
         });
         res.status(201).json({
@@ -217,6 +218,21 @@ const delete_article = async (req, res) => {
     });
   }
 };
+const status_change = async (req, res) => {
+  const { articleId } = req.params;
+  const { status } = req.body;
+  try {
+    await articleModel.findByIdAndUpdate(articleId, { status });
+    res.status(200).json({
+      successMessage: "Article update successful",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   get_tag_category,
   add_article,
@@ -224,4 +240,5 @@ module.exports = {
   edit_article,
   update_article,
   delete_article,
+  status_change,
 };

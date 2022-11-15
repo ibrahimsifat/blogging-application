@@ -1,8 +1,9 @@
 import { Button } from "@windmill/react-ui";
 import Axios from "axios";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import ProcessBtn from "../../../components/shared/ui/Button/ProcessBtn";
+import ProcessBtn from "../components/shared/ui/Button/ProcessBtn";
+import Error from "../components/shared/ui/Error";
 
 const focusedStyle = {
   borderColor: "#2196f3",
@@ -31,6 +32,7 @@ const rejectStyle = {
 };
 
 function UseUpload({ selectImage, setSelectImage }) {
+  const [invalidFileError, setInvalidFileError] = useState(null);
   const {
     acceptedFiles,
     fileRejections,
@@ -46,7 +48,10 @@ function UseUpload({ selectImage, setSelectImage }) {
       "image/png": [],
     },
   });
-  fileRejections && console.log(fileRejections);
+
+  useEffect(() => {
+    setInvalidFileError(fileRejections[0]?.errors[0]?.code);
+  }, [fileRejections]);
   const style = useMemo(
     () => ({
       ...baseStyle,
@@ -115,6 +120,7 @@ function UseUpload({ selectImage, setSelectImage }) {
           <input type="file" class="hidden" {...getInputProps()} />
         </div>
       </div>
+      <Error>{invalidFileError && invalidFileError}</Error>
       <div>
         {photoLoading ? (
           <ProcessBtn>Uploading</ProcessBtn>
@@ -124,6 +130,12 @@ function UseUpload({ selectImage, setSelectImage }) {
               Upload
             </Button>
           )
+        )}
+        {/* update image btn */}
+        {selectImage !== null && (
+          <Button block onClick={() => setSelectImage(null)}>
+            update Image
+          </Button>
         )}
       </div>
     </div>

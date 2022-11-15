@@ -1,37 +1,67 @@
 import { Button, Label } from "@windmill/react-ui";
 import JoditEditor from "jodit-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
-import PageTitle from "../../../components/dashboard/Typography/PageTitle";
+import PageTitle from "../../../../components/dashboard/Typography/PageTitle";
 import {
   ErrorInput,
   Input,
   InputLabel,
-} from "../../../components/shared/input/Input";
-import ProcessBtn from "../../../components/shared/ui/Button/ProcessBtn";
-import Error from "../../../components/shared/ui/Error";
-import { useGetCategoriesQuery } from "../../../features/category/categoriesApi";
-import { selectPublishedCategory } from "../../../features/category/categorySelector";
-import { useGetTagsQuery } from "../../../features/tag/tagsApi";
-import { selectPublishedTag } from "../../../features/tag/tagSelector";
-import DeleteModal from "../../../hooks/deleteModal";
-import arrayFromSelectValues from "../../../utils/arrayFromSelectValues";
-import { articleValidate } from "../../../utils/validator/formValidator";
-import Form from "../../auth/ui/Form";
-import UseUpload from "./UseUpload";
-
-const AddArticles = () => {
+} from "../../../../components/shared/input/Input";
+import ProcessBtn from "../../../../components/shared/ui/Button/ProcessBtn";
+import Error from "../../../../components/shared/ui/Error";
+import {
+  useAddArticleMutation,
+  useGetArticleQuery,
+} from "../../../../features/articles/articlesApi";
+import { useGetCategoriesQuery } from "../../../../features/category/categoriesApi";
+import { selectPublishedCategory } from "../../../../features/category/categorySelector";
+import { useGetTagsQuery } from "../../../../features/tag/tagsApi";
+import { selectPublishedTag } from "../../../../features/tag/tagSelector";
+import UseUpload from "../../../../hooks/UseUpload";
+import {
+  arrayFromSelectValues,
+  arrayFromValues,
+} from "../../../../utils/arrayFromSelectValues";
+import { articleValidate } from "../../../../utils/validator/formValidator";
+import Form from "../../../auth/ui/Form";
+const UpdateArticle = () => {
+  const [addArticle, { isSuccess }] = useAddArticleMutation();
   // article details
   const [description, setDescription] = useState("");
   const [submitError, setSubmitError] = useState([]);
+
+  const { articleSlug } = useParams();
+  const [defaultCategory, setDefaultCategory] = useState([]);
+  const [defaultTags, setDefaultTags] = useState([]);
+
+  // fetch category
+  const { data } = useGetArticleQuery(articleSlug);
+
+  // get category from state
+  const editArticle = data?.editArticle;
+
+  // update input value
+  useEffect(() => {
+    // update old category and tags
+    const oldCategories = arrayFromValues(editArticle?.category?.split(" "));
+    const oldTags = arrayFromValues(editArticle?.tag?.split(" "));
+    setDefaultCategory(oldCategories);
+    setDefaultTags(oldTags);
+
+    // update description
+    setDescription(editArticle?.articleText);
+  }, [editArticle]);
+
   const editor = useRef();
   const config = {
     readonly: false,
     theme: "dark",
   };
-
+  console.log(description);
   // select
   const [categoryField, setCategoryField] = useState([]);
   const [tagsField, setTagsField] = useState([]);
@@ -68,32 +98,36 @@ const AddArticles = () => {
     mode: "onBlur", // "onChange"
   });
   const onSubmit = (data) => {
-    const errors = articleValidate({
-      title: data.title,
-      categories: categoryField,
-      tags: tagsField,
-      image: "selectImage",
-      description: description,
-    });
+    const title = data.title.charAt(0).toUpperCase() + data.title.slice(1);
+    const articleObj = {
+      title,
+      category: categoryField,
+      tag: tagsField,
+      image: selectImage,
+      text: description,
+    };
+    const errors = articleValidate({ ...articleObj });
     if (errors !== {} || errors) {
       const errorArray = Object.values(errors);
       setSubmitError(errorArray);
     }
     console.log("errors", errors);
     if (Object.keys(errors).length === 0) {
-      console.log({
-        title: data.title,
-        categories: categoryField,
-        tags: tagsField,
-        image: selectImage,
-        description: description,
-      });
+      addArticle({ ...articleObj });
     }
   };
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSuccess) {
+      // successNotify("Category added successfully");
+      navigate("/dashboard/articles");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
+  console.log(defaultCategory);
   return (
     <>
-      <DeleteModal />
       <PageTitle className="">Add new Articles</PageTitle>
       <div className="md:p-10 p-4">
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -112,6 +146,7 @@ const AddArticles = () => {
               {"Select categories"}
             </InputLabel>
             <Select
+              defaultValue={defaultCategory}
               required
               isMulti
               id="selectCategory"
@@ -170,4 +205,4 @@ const AddArticles = () => {
   );
 };
 
-export default AddArticles;
+export default UpdateArticle;

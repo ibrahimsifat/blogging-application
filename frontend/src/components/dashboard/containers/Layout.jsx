@@ -2,8 +2,9 @@ import React, { lazy, Suspense, useContext, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { SidebarContext } from "../../../context/dashboard/SidebarContext";
 
-import AddArticles from "../../../pages/dashboard/articles/AddArticles";
+import AddArticles from "../../../pages/dashboard/articles/add/AddArticles";
 import Articles from "../../../pages/dashboard/articles/Articles";
+import UpdateArticle from "../../../pages/dashboard/articles/update";
 import AddCategory from "../../../pages/dashboard/categories/add";
 import Categories from "../../../pages/dashboard/categories/Categories";
 import UpdateCategory from "../../../pages/dashboard/categories/update";
@@ -33,6 +34,7 @@ function Layout({ children }) {
 
   useEffect(() => {
     closeSidebar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   return (
@@ -52,6 +54,10 @@ function Layout({ children }) {
               <Route path="/comments" element={<Comments />} />
               <Route path="/articles" element={<Articles />} />
               <Route path="/article/add" element={<AddArticles />} />
+              <Route
+                path="/article/edit/:articleId"
+                element={<UpdateArticle />}
+              />
               {/* categories routes */}
               <Route path="/category" element={<Categories />} />
               <Route path="/category/add/" element={<AddCategory />} />
