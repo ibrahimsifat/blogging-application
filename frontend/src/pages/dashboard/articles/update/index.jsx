@@ -8,7 +8,7 @@ import PageTitle from "../../../../components/dashboard/Typography/PageTitle";
 import InputGroup from "../../../../components/shared/input/Input";
 import Error from "../../../../components/shared/ui/Error";
 import {
-  useGetArticleQuery,
+  useGetArticleByIdQuery,
   useUpdateArticleMutation,
 } from "../../../../features/articles/articlesApi";
 import { useGetCategoriesQuery } from "../../../../features/category/categoriesApi";
@@ -41,7 +41,7 @@ const UpdateArticle = () => {
     setTitle(e.target.value);
   };
   // fetch category
-  const { data } = useGetArticleQuery(articleId);
+  const { data } = useGetArticleByIdQuery(articleId);
 
   // get category from state
   const editArticle = data?.editArticle;

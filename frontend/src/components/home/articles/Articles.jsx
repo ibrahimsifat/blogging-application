@@ -1,85 +1,57 @@
-import { Badge } from "@windmill/react-ui";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Pagination } from "@windmill/react-ui";
+import React, { useEffect, useState } from "react";
+import { useGetPublishedArticlesQuery } from "../../../features/articles/articlesApi";
+import Error from "../../shared/ui/Error";
+import ArticleCard from "./articleCard/ArticleCard";
 const Articles = () => {
+  // pagination change control
+  const [pageTable, setPageTable] = useState(1);
+  const [articles, setArticles] = useState([]);
+  function onPageChangeTable(p) {
+    setPageTable(p);
+  }
+  // fetching articles
+  const {
+    data: publishedArticles,
+    isLoading,
+    isError,
+    error,
+  } = useGetPublishedArticlesQuery(pageTable);
+
+  useEffect(() => {
+    setArticles(publishedArticles?.articles);
+  }, [publishedArticles]);
+  console.log(articles);
+
+  // pagination setup
+  const resultsPerPage = 10;
+  const totalResults = publishedArticles?.articleCount;
+
+  // decide what to render
+  let content = null;
+  if (isLoading) {
+    content = <p>Loading... </p>;
+  } else if (!isLoading && isError) {
+    content = <Error message={error?.data} />;
+  } else if (!isLoading && !isError && articles?.length === 0) {
+    content = <p>No Teams found!</p>;
+  } else if (!isLoading && !isError && articles?.length > 0) {
+    content = articles?.map((article) => (
+      <ArticleCard key={article._id} article={article} />
+    ));
+  }
+
   return (
-    <div>
-      <Article />
-      <Article />
-      <Article />
-      <Article />
-      <Article />
-      <Article />
-    </div>
+    <>
+      <div>{content}</div>
+      <Pagination
+        totalResults={totalResults}
+        resultsPerPage={resultsPerPage}
+        onChange={onPageChangeTable}
+        label="Table navigation"
+      />
+    </>
   );
 };
 
 export default Articles;
-const Article = () => {
-  return (
-    <div>
-      <div className="space-y-4 lg:grid lg:grid-cols-3 lg:items-start lg:gap-6 lg:space-y-0 border-b border-gray-200 my-5 shadow-sm">
-        <a href="https://stackdiary.com/" className="group">
-          <div className="aspect-w-3 aspect-h-2">
-            <img
-              className=" rounded-lg group-hover:opacity-75 w-full h-48"
-              src="https://www.gen.com.sg/wp-content/uploads/srs-investment-article-image.jpg"
-              alt="Featured Photo"
-            />
-          </div>
-        </a>
-
-        <div className="sm:col-span-2 p-4">
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              <Badge type="neutral">JavaScript</Badge>
-              <Badge>React</Badge>
-              <Badge>Node Js</Badge>
-            </div>
-          </div>
-
-          <div className="mt-2">
-            <Link to="/articles/articles-slug">
-              <h4 className="text-lg leading-6 font-semibold font-sans text-skin-inverted group-hover:text-skin-primary">
-                A Tailwind CSS Card for Displaying....
-              </h4>
-            </Link>
-
-            <p className="mt-1 text-sm font-normal text-skin-base leading-5">
-              Metus potenti velit sollicitudin porttitor magnis elit lacinia
-              tempor varius, ut cras orci vitae parturient id nisi vulputate....
-            </p>
-
-            <div className="mt-3 flex items-center font-sans">
-              <div className="shrink-0">
-                <a href="https://stackdiary.com/">
-                  <span className="sr-only">John Doe</span>
-
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
-                    alt="Ekim Kael"
-                  />
-                </a>
-              </div>
-
-              <div className="ml-3">
-                <p className="text-sm font-medium text-skin-inverted">
-                  <a href="https://stackdiary.com" className="hover:underline">
-                    John Doe
-                  </a>
-                </p>
-
-                <div className="flex space-x-1 text-sm text-skin-muted">
-                  <time dateTime="2022-02-01">1 Feb, 2022</time>
-
-                  <span>3 min read time</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};

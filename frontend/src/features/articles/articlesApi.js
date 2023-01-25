@@ -1,25 +1,14 @@
 import { apiSlice } from "../api/apiSlice";
-import { editArticle, publishedArticles } from "./articlesSlice";
 
 export const articlesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getArticles: builder.query({
       query: (page) => `/article/get?page=${page}`,
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(
-            publishedArticles(
-              result.data?.articles?.filter(
-                (article) => article.status === "published"
-              )
-            )
-          );
-        } catch (err) {
-          // do nothing
-        }
-      },
+
       providesTags: ["Article"],
+    }),
+    getPublishedArticles: builder.query({
+      query: (page) => `/article/get/published?page=${page}`,
     }),
     addArticle: builder.mutation({
       query: (data) => ({
@@ -30,18 +19,16 @@ export const articlesApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Article"],
     }),
     getArticle: builder.query({
+      query: (slug) => ({
+        url: `/article/get/${slug}`,
+        method: "GET",
+      }),
+    }),
+    getArticleById: builder.query({
       query: (id) => ({
         url: `/article/edit/${id}`,
         method: "GET",
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(editArticle(result.data.editArticle));
-        } catch (err) {
-          // do nothing
-        }
-      },
     }),
 
     updateArticle: builder.mutation({
@@ -83,4 +70,6 @@ export const {
   useLazyGetArticleQuery,
   useUpdateArticleMutation,
   useUpdateArticleStatusMutation,
+  useGetArticleByIdQuery,
+  useGetPublishedArticlesQuery,
 } = articlesApi;

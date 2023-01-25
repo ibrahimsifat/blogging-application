@@ -18,7 +18,7 @@ const get_tag_category = async (req, res) => {
 };
 
 const add_article = async (req, res) => {
-  const { adminId, adminName } = req;
+  const { adminId, adminName, adminAvatar } = req;
 
   const { title, category, tag, text, image } = req.body;
   const validate = article_validator(req.body);
@@ -33,8 +33,11 @@ const add_article = async (req, res) => {
       const slug = title.split(" ").join("-");
       try {
         await articleModel.create({
-          adminId,
-          adminName,
+          author: {
+            name: adminName,
+            id: adminId,
+            avatar: adminAvatar,
+          },
           title,
           slug,
           category,
@@ -61,81 +64,131 @@ const add_article = async (req, res) => {
   }
 };
 
+// const get_article = async (req, res) => {
+//   const { role, adminId } = req;
+//   const { currentPage, searchValue } = req.query;
+
+//   const parPage = 10;
+
+//   const skipPage = parseInt(currentPage - 1) * parPage;
+
+//   let articles = [];
+
+//   try {
+//     let articleCount = 0;
+
+//     if (searchValue) {
+//       if (role === "admin") {
+//         articleCount = await articleModel.find({}).countDocuments();
+//         articles = await articleModel
+//           .find({})
+//           .skip(skipPage)
+//           .limit(parPage)
+//           .sort({ createAt: -1 });
+//         articles = articles.filter(
+//           (ar) => ar.title.toUpperCase().indexOf(searchValue.toUpperCase()) > -1
+//         );
+//       } else {
+//         articleCount = await articleModel.find({ adminId }).countDocuments();
+//         articles = await articleModel
+//           .find({ adminId })
+//           .skip(skipPage)
+//           .limit(parPage)
+//           .sort({ createAt: -1 });
+//         articles = articles.filter(
+//           (ar) => ar.title.toUpperCase().indexOf(searchValue.toUpperCase()) > -1
+//         );
+//       }
+//     } else {
+//       if (role === "admin") {
+//         articleCount = await articleModel.find({}).countDocuments();
+//         articles = await articleModel
+//           .find({})
+//           .skip(skipPage)
+//           .limit(parPage)
+//           .sort({ createAt: -1 });
+//       } else {
+//         articleCount = await articleModel.find({ adminId }).countDocuments();
+//         articles = await articleModel
+//           .find({ adminId })
+//           .skip(skipPage)
+//           .limit(parPage)
+//           .sort({ createAt: -1 });
+//       }
+//     }
+
+//     res.status(200).json({
+//       articles,
+//       parPage,
+//       articleCount,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       errorMessage: {
+//         error: "Internal server error",
+//       },
+//     });
+//   }
+// };
+
 const get_article = async (req, res) => {
-  const { role, adminId } = req;
-  const { currentPage, searchValue } = req.query;
+  const { page } = req.query;
 
   const parPage = 10;
-
-  const skipPage = parseInt(currentPage - 1) * parPage;
-
-  let articles = [];
+  const skipPage = parseInt(page - 1) * parPage;
 
   try {
-    let articleCount = 0;
-
-    if (searchValue) {
-      if (role === "admin") {
-        articleCount = await articleModel.find({}).countDocuments();
-        articles = await articleModel
-          .find({})
-          .skip(skipPage)
-          .limit(parPage)
-          .sort({ createAt: -1 });
-        articles = articles.filter(
-          (ar) => ar.title.toUpperCase().indexOf(searchValue.toUpperCase()) > -1
-        );
-      } else {
-        articleCount = await articleModel.find({ adminId }).countDocuments();
-        articles = await articleModel
-          .find({ adminId })
-          .skip(skipPage)
-          .limit(parPage)
-          .sort({ createAt: -1 });
-        articles = articles.filter(
-          (ar) => ar.title.toUpperCase().indexOf(searchValue.toUpperCase()) > -1
-        );
-      }
-    } else {
-      if (role === "admin") {
-        articleCount = await articleModel.find({}).countDocuments();
-        articles = await articleModel
-          .find({})
-          .skip(skipPage)
-          .limit(parPage)
-          .sort({ createAt: -1 });
-      } else {
-        articleCount = await articleModel.find({ adminId }).countDocuments();
-        articles = await articleModel
-          .find({ adminId })
-          .skip(skipPage)
-          .limit(parPage)
-          .sort({ createAt: -1 });
-      }
-    }
-
+    const articleCount = await articleModel.find({}).countDocuments();
+    const getArticle = await articleModel
+      .find({})
+      .skip(skipPage)
+      .limit(parPage)
+      .sort({ createdAt: -1 });
     res.status(200).json({
-      articles,
+      articles: getArticle,
       parPage,
       articleCount,
     });
   } catch (error) {
     res.status(500).json({
-      errorMessage: {
-        error: "Internal server error",
-      },
+      error: "Internal server error",
     });
   }
 };
+const get_published_article = async (req, res) => {
+  const { page } = req.query;
 
+  const parPage = 10;
+  const skipPage = parseInt(page - 1) * parPage;
+
+  try {
+    const articleCount = await articleModel
+      .find({ status: "published" })
+      .countDocuments();
+    const getArticle = await articleModel
+      .find({ status: "published" })
+      .skip(skipPage)
+      .limit(parPage)
+      .sort({ createdAt: -1 });
+    res.status(200).json({
+      articles: getArticle,
+      parPage,
+      articleCount,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
 const edit_article = async (req, res) => {
   const { articleId } = req.params;
   const { adminId, role } = req;
-
+  console.log(adminId);
   try {
     const getArticle = await articleModel.findById(articleId);
     if (
-      (getArticle && getArticle.adminId === adminId) ||
+      (getArticle && getArticle?.author?.id === adminId) ||
       getArticle.role === role
     ) {
       res.status(200).json({ editArticle: getArticle });
@@ -150,6 +203,7 @@ const edit_article = async (req, res) => {
     });
   }
 };
+
 const update_article = async (req, res) => {
   const { title, category, tag, text, articleId } = req.body;
   const { adminId, role } = req;
@@ -160,7 +214,7 @@ const update_article = async (req, res) => {
       console.log(articleId);
 
       if (
-        (getArticle && getArticle.adminId === adminId) ||
+        (getArticle && getArticle?.author?.id === adminId) ||
         getArticle.role === role
       ) {
         const category_slug = category.join("-");
@@ -200,7 +254,7 @@ const delete_article = async (req, res) => {
     const getArticle = await articleModel.findById(articleId);
 
     if (
-      (getArticle && getArticle.adminId === adminId) ||
+      (getArticle && getArticle?.author?.id === adminId) ||
       getArticle.role === role
     ) {
       await articleModel.findByIdAndDelete(articleId);
@@ -233,12 +287,36 @@ const status_change = async (req, res) => {
   }
 };
 
+const getSingleArticle = async (req, res) => {
+  const { articleSlug } = req.params;
+  const { adminId, role } = req;
+
+  try {
+    const getArticle = await articleModel.findOne({ slug: articleSlug });
+    if (
+      (getArticle && getArticle.getArticle?.author?.id === adminId) ||
+      getArticle.role === role
+    ) {
+      res.status(200).json(getArticle);
+    } else {
+      res.status(404).json({
+        error: "You can not edit this article",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
 module.exports = {
   get_tag_category,
+  getSingleArticle,
   add_article,
   get_article,
   edit_article,
   update_article,
   delete_article,
   status_change,
+  get_published_article,
 };

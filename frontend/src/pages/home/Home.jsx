@@ -16,7 +16,7 @@ const Home = () => {
         {/* article section */}
         <Routes>
           <Route path="/" element={<HomeArticles />} />
-          <Route path="/articles/:slug" element={<ArticlesDetails />} />
+          <Route path="/articles/:articleSlug" element={<ArticlesDetails />} />
           {/* <Route path="/articles/*" element={<NotFoundArticle />} /> */}
         </Routes>
 

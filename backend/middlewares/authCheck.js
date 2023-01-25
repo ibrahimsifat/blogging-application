@@ -28,6 +28,7 @@ module.exports.adminAuth = async (req, res, next) => {
         } else {
           req.adminId = decodedToken.id;
           req.adminName = decodedToken.name;
+          req.adminAvatar = decodedToken.image;
           req.role = decodedToken.role;
           next();
         }
